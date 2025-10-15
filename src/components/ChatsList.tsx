@@ -37,7 +37,10 @@ export const ChatsList = ({
                 }
                 message={chat.message}
                 isActive={chat.id === activeChatId}
-                onClick={() => setActiveChatId(chat.id)}
+                onClick={() => {
+                  setActiveChatId(chat.id);
+                  setCurrentView(CurrentView.CHAT);
+                }}
                 key={chat.id}
               />
             );

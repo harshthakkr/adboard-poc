@@ -36,7 +36,7 @@ export const Chat = ({
       ) : currentView === CurrentView.VIDEO_CALL ? (
         <VideoCall setCurrentView={handleViewChange} />
       ) : (
-        <ChatContent activeChat={activeChat} />
+        <ChatContent currentView={currentView} activeChat={activeChat} />
       )}
     </div>
   );
