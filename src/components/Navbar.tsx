@@ -7,7 +7,7 @@ import { ToggleItem } from "./ToggleItem";
 
 export const Navbar = () => {
   return (
-    <nav className="flex items-center justify-center">
+    <nav className="flex items-center justify-center px-8 py-3">
       <img src={logo} alt="logo" className="absolute left-8" />
       <div className="flex gap-2 p-2 border-[2px] border-white bg-white/80 rounded-full">
         <ToggleItem icon={squaresFourLogo} alt="" title="Dashboard" />

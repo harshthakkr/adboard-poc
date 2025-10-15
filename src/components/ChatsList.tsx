@@ -1,48 +1,48 @@
-import { Chat } from "./Chat";
+import { ChatItem } from "./ChatItem";
 import notePencilLogo from "/NotePencil.svg";
 
-export const Chats = () => {
+export const ChatsList = () => {
   return (
-    <div className="w-[320px]">
-      <div className="flex items-center justify-between h-[72px] py-1">
+    <div className="w-[320px] h-[calc(100vh-120px)] flex flex-col">
+      <div className="flex items-center justify-between h-[72px] py-1 flex-shrink-0">
         <h2 className="font-medium text-lg">Chats</h2>
         <img src={notePencilLogo} alt="" />
       </div>
-      <div className="flex flex-col gap-2">
-        <Chat
+      <div className="flex flex-col gap-2 overflow-y-auto flex-1">
+        <ChatItem
           name="Dr. Emily Chen"
           message="What roles do regulatory affairs specialists play in drug approval?"
           isActive
         />
-        <Chat
+        <ChatItem
           name="Sarah Patel"
           message="How do clinical research associates contribute to trials?"
         />
-        <Chat
+        <ChatItem
           name="Rajiv Kumar"
           message="What is the importance of pharmacovigilance specialists?"
         />
-        <Chat
+        <ChatItem
           name="Linda Garcia"
           message="How do medical science liaisons bridge the gap between research and clinical practice?"
         />
-        <Chat
+        <ChatItem
           name="Dr. Sarah Khan"
           message="What are the latest advancements in drug development?"
         />
-        <Chat
+        <ChatItem
           name="Emily Thompson"
           message="How do regulatory agencies impact pharmaceutical research?"
         />
-        <Chat
+        <ChatItem
           name="David Li"
           message="What role do clinical trials play in the approval process?"
         />
-        <Chat
+        <ChatItem
           name="Emma Chen"
           message="How are patients selected for clinical trials?"
         />
-        <Chat
+        <ChatItem
           name="Emma Chen"
           message="How are patients selected for clinical trials?"
         />

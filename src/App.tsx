@@ -1,13 +1,15 @@
 import "./App.css";
-import { Chats } from "./components/Chats";
+import { Chat } from "./components/Chat";
+import { ChatsList } from "./components/ChatsList";
 import { Navbar } from "./components/Navbar";
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 px-8 py-4">
+    <div className="min-h-screen bg-gray-100">
       <Navbar />
-      <div className="px-4">
-        <Chats />
+      <div className="flex gap-3 px-8 py-4">
+        <ChatsList />
+        <Chat />
       </div>
     </div>
   );
