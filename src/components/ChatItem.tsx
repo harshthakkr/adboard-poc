@@ -4,16 +4,19 @@ export const ChatItem = ({
   name,
   message,
   isActive,
+  onClick,
 }: {
   name: string;
   message: string;
   isActive?: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <div
-      className={`flex gap-2 items-center p-2 ${
+      onClick={onClick}
+      className={`flex gap-2 items-center p-2 cursor-pointer ${
         isActive && "bg-[#EBF0FF] rounded-[12px]"
-      } border-b border-[#EEEEEE]`}
+      } border-b border-[#EEEEEE] hover:bg-gray-50`}
     >
       <img
         src={avatar}

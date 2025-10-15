@@ -1,51 +1,48 @@
 import { ChatItem } from "./ChatItem";
 import notePencilLogo from "/NotePencil.svg";
+import allChats from "../data/chats.json";
+import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 
-export const ChatsList = () => {
+export const ChatsList = ({
+  activeChatId,
+  setActiveChatId,
+  setCurrentView,
+}: {
+  activeChatId: number;
+  setActiveChatId: (id: number) => void;
+  setCurrentView: (view: CurrentViewType) => void;
+}) => {
   return (
     <div className="w-[320px] h-[calc(100vh-120px)] flex flex-col">
       <div className="flex items-center justify-between h-[72px] py-1 flex-shrink-0">
         <h2 className="font-medium text-lg">Chats</h2>
-        <img src={notePencilLogo} alt="" />
+        <img
+          src={notePencilLogo}
+          alt=""
+          onClick={() => setCurrentView(CurrentView.NEW_CHAT)}
+        />
       </div>
       <div className="flex flex-col gap-2 overflow-y-auto flex-1">
-        <ChatItem
-          name="Dr. Emily Chen"
-          message="What roles do regulatory affairs specialists play in drug approval?"
-          isActive
-        />
-        <ChatItem
-          name="Sarah Patel"
-          message="How do clinical research associates contribute to trials?"
-        />
-        <ChatItem
-          name="Rajiv Kumar"
-          message="What is the importance of pharmacovigilance specialists?"
-        />
-        <ChatItem
-          name="Linda Garcia"
-          message="How do medical science liaisons bridge the gap between research and clinical practice?"
-        />
-        <ChatItem
-          name="Dr. Sarah Khan"
-          message="What are the latest advancements in drug development?"
-        />
-        <ChatItem
-          name="Emily Thompson"
-          message="How do regulatory agencies impact pharmaceutical research?"
-        />
-        <ChatItem
-          name="David Li"
-          message="What role do clinical trials play in the approval process?"
-        />
-        <ChatItem
-          name="Emma Chen"
-          message="How are patients selected for clinical trials?"
-        />
-        <ChatItem
-          name="Emma Chen"
-          message="How are patients selected for clinical trials?"
-        />
+        {allChats.map(
+          (chat: {
+            id: number;
+            name: string[];
+            message: string;
+            isActive: boolean;
+          }) => {
+            return (
+              <ChatItem
+                name={
+                  chat.name.length === 1 ? chat.name[0] : chat.name.join(", ")
+                }
+                message={chat.message}
+                isActive={chat.id === activeChatId}
+                onClick={() => setActiveChatId(chat.id)}
+                key={chat.id}
+              />
+            );
+          }
+        )}
       </div>
     </div>
   );

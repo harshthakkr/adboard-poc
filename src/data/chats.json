@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": ["Dr. Emily Chen"],
+    "message": "What roles do regulatory affairs specialists play in drug approval?",
+    "isActive": true
+  },
+  {
+    "id": 2,
+    "name": ["Sarah Patel"],
+    "message": "How do clinical research associates contribute to trials?",
+    "isActive": false
+  },
+  {
+    "id": 3,
+    "name": ["Rajiv Kumar"],
+    "message": "What is the importance of pharmacovigilance specialists?",
+    "isActive": false
+  },
+  {
+    "id": 4,
+    "name": ["Linda Garcia"],
+    "message": "How do medical science liaisons bridge the gap between research and clinical practice?",
+    "isActive": false
+  },
+  {
+    "id": 5,
+    "name": ["Dr. Sarah Khan"],
+    "message": "What are the latest advancements in drug development?",
+    "isActive": false
+  },
+  {
+    "id": 6,
+    "name": ["Emily Thompson"],
+    "message": "How do regulatory agencies impact pharmaceutical research?",
+    "isActive": false
+  },
+  {
+    "id": 7,
+    "name": ["David Li"],
+    "message": "What role do clinical trials play in the approval process?",
+    "isActive": false
+  },
+  {
+    "id": 8,
+    "name": ["Emma Chen"],
+    "message": "How are patients selected for clinical trials?",
+    "isActive": false
+  },
+  {
+    "id": 9,
+    "name": ["Emma Chen"],
+    "message": "How are patients selected for clinical trials?",
+    "isActive": false
+  }
+]

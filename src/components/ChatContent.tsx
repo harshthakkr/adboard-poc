@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
 import copyIcon from "/Copy.svg";
 import speakerHighIcon from "/SpeakerHigh.svg";
 import thumbsUpIcon from "/ThumbsUp.svg";
@@ -7,8 +9,32 @@ import arrowsClockwiseIcon from "/ArrowsClockwise.svg";
 import iconButton from "/IconButton.svg";
 import arrowUpIcon from "/ArrowUp.svg";
 import background from "/ButtonImageBackground.png";
+import xIcon from "/x.svg";
 
-export const ChatContent = () => {
+interface ChatContentProps {
+  activeChat?: {
+    id: number;
+    name: string[];
+    message: string;
+    isActive: boolean;
+  };
+}
+
+export const ChatContent = ({ activeChat }: ChatContentProps) => {
+  const [message, setMessage] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    noClick: false,
+    noDrag: true,
+    onDrop: (acceptedFiles) => {
+      setFiles((prev) => [...prev, ...acceptedFiles]);
+    },
+  });
+
+  const removeFile = (fileToRemove: File) => {
+    setFiles((prev) => prev.filter((file) => file !== fileToRemove));
+  };
   return (
     <div>
       <div className="flex-1 overflow-y-auto">
@@ -38,8 +64,7 @@ export const ChatContent = () => {
           </div>
           <div className="flex justify-end">
             <p className="bg-[#4B7BFF] w-[406px] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px]">
-              What roles do regulatory affairs specialists play in drug
-              approval?
+              {activeChat?.message}
             </p>
           </div>
           <div className="flex flex-col gap-[10px] py-3">
@@ -60,11 +85,55 @@ export const ChatContent = () => {
         </div>
       </div>
       <div className="absolute w-[calc(100%-64px)] left-8 flex flex-col gap-4 p-4 rounded-[16px] bottom-4 border border-px border-[#EEEEEE] z-50 bg-white">
-        <p>
-          What roles do regulatory affairs specialists play in drug approval?
-        </p>
+        {files.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {files.map((file) => (
+              <div
+                key={file.name}
+                className="relative flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg"
+              >
+                <button
+                  onClick={() => removeFile(file)}
+                  className="absolute -top-1 -right-1 bg-[#EBF0FF] rounded-full flex items-center justify-center cursor-pointer"
+                >
+                  <img src={xIcon} alt="remove" className="w-4 h-4" />
+                </button>
+                {file.type.startsWith("image/") ? (
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={file.name}
+                    className="w-10 h-10 object-cover rounded"
+                  />
+                ) : (
+                  <div className="w-10 h-10 bg-gray-300 rounded flex items-center justify-center text-xs font-medium">
+                    {file.name.split(".").pop()?.toUpperCase()}
+                  </div>
+                )}
+                <span className="text-sm max-w-[150px] truncate">
+                  {file.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+        <input
+          type="text"
+          value={message}
+          placeholder="Ask anything..."
+          onChange={(e) => setMessage(e.target.value)}
+          className="outline-none"
+        ></input>
         <div className="flex justify-between">
-          <img src={iconButton} alt="" height={40} width={40} />
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            <img
+              src={iconButton}
+              alt=""
+              height={40}
+              width={40}
+              className="cursor-pointer"
+            />
+          </div>
           <div
             className="p-[1px] rounded-full"
             style={{
@@ -72,7 +141,7 @@ export const ChatContent = () => {
             }}
           >
             <div
-              className="flex justify-center items-center h-10 w-10 text-[#93A1B8] rounded-full"
+              className="flex justify-center items-center h-10 w-10 text-[#93A1B8] rounded-full cursor-pointer"
               style={{
                 backgroundImage: `url(${background}), linear-gradient(to bottom, #013BDB, #2C62F7)`,
                 backgroundBlendMode: "normal",

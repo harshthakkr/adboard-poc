@@ -1,9 +1,10 @@
+import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 import { VideoCallScreen } from "./VideoCallScreen";
 
 export const GroupVideoCall = ({
-  setIsVideoCall,
+  setCurrentView,
 }: {
-  setIsVideoCall: (value: boolean) => void;
+  setCurrentView: (view: CurrentViewType) => void;
 }) => {
   return (
     <>
@@ -68,7 +69,7 @@ export const GroupVideoCall = ({
           <img src="/ChatCircle-2.svg" alt="" />
         </div>
         <div
-          onClick={() => setIsVideoCall(false)}
+          onClick={() => setCurrentView(CurrentView.CHAT)}
           className="flex justify-center items-center w-11 h-11 rounded-full bg-[#EE4D37]"
         >
           <img src="/Phone-2.svg" alt="" />
