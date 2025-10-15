@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import copyIcon from "/Copy.svg";
 import speakerHighIcon from "/SpeakerHigh.svg";
@@ -25,6 +25,10 @@ interface ChatContentProps {
 export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
+  const [sentMessages, setSentMessages] = useState<Record<number, string[]>>(
+    {}
+  );
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const { getRootProps, getInputProps } = useDropzone({
     noClick: false,
@@ -37,11 +41,36 @@ export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
   const removeFile = (fileToRemove: File) => {
     setFiles((prev) => prev.filter((file) => file !== fileToRemove));
   };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (message.trim() && activeChat) {
+      setSentMessages((prev) => ({
+        ...prev,
+        [activeChat.id]: [...(prev[activeChat.id] || []), message],
+      }));
+      setMessage("");
+      setFiles([]);
+    }
+  };
+
+  // Auto-scroll to bottom when new messages are sent
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [sentMessages, activeChat]);
+
+  // Get messages for the current active chat
+  const currentChatMessages = activeChat
+    ? sentMessages[activeChat.id] || []
+    : [];
+
   return (
-    <div>
-      <div className="flex-1 overflow-y-auto">
+    <div className="h-full relative flex flex-col">
+      <div className="flex-1 overflow-y-auto" ref={scrollRef}>
         {currentView === CurrentView.CHAT ? (
-          <div className="flex flex-col gap-[10px] px-8 mt-[37px] pb-32">
+          <div className="flex flex-col gap-[10px] px-8 mt-[37px] pb-40">
             <div className="flex flex-col gap-[10px] py-3">
               <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
                 For patients who are NPO (nothing by mouth) prior to a procedure
@@ -85,6 +114,13 @@ export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
                 the prescribing information.
               </p>
             </div>
+            {currentChatMessages.map((msg, index) => (
+              <div key={index} className="flex justify-end">
+                <p className="bg-[#4B7BFF] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px] max-w-[406px]">
+                  {msg}
+                </p>
+              </div>
+            ))}
           </div>
         ) : (
           ""
@@ -122,45 +158,47 @@ export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
             ))}
           </div>
         )}
-        <input
-          type="text"
-          value={message}
-          placeholder="Ask anything..."
-          onChange={(e) => setMessage(e.target.value)}
-          className="outline-none"
-        ></input>
-        <div className="flex justify-between">
-          <div {...getRootProps()}>
-            <input {...getInputProps()} />
-            <img
-              src={iconButton}
-              alt=""
-              height={40}
-              width={40}
-              className="cursor-pointer"
-            />
-          </div>
-          <div
-            className="p-[1px] rounded-full"
-            style={{
-              background: "linear-gradient(to bottom, #013BDB, #77C0FF)",
-            }}
-          >
+        <form onSubmit={handleSendMessage} className="flex flex-col gap-4">
+          <input
+            type="text"
+            value={message}
+            placeholder="Ask anything..."
+            onChange={(e) => setMessage(e.target.value)}
+            className="outline-none"
+          />
+          <div className="flex justify-between">
+            <div {...getRootProps()}>
+              <input {...getInputProps()} />
+              <img
+                src={iconButton}
+                alt=""
+                height={40}
+                width={40}
+                className="cursor-pointer"
+              />
+            </div>
             <div
-              className="flex justify-center items-center h-10 w-10 text-[#93A1B8] rounded-full cursor-pointer"
+              className="p-[1px] rounded-full"
               style={{
-                backgroundImage: `url(${background}), linear-gradient(to bottom, #013BDB, #2C62F7)`,
-                backgroundBlendMode: "normal",
-
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
+                background: "linear-gradient(to bottom, #013BDB, #77C0FF)",
               }}
             >
-              <img src={arrowUpIcon} alt="" className="relative z-10" />
+              <button
+                type="submit"
+                className="flex justify-center items-center h-10 w-10 text-[#93A1B8] rounded-full cursor-pointer"
+                style={{
+                  backgroundImage: `url(${background}), linear-gradient(to bottom, #013BDB, #2C62F7)`,
+                  backgroundBlendMode: "normal",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <img src={arrowUpIcon} alt="" className="relative z-10" />
+              </button>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

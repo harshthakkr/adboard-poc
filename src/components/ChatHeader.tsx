@@ -2,18 +2,14 @@ import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 import avatar from "/Avatar.png";
 import phoneIcon from "/Phone.svg";
 import videoCameraIcon from "/VideoCamera.svg";
-import allChats from "../data/chats.json";
+import allDoctors from "../data/doctor.json";
 import { useState, useRef, useEffect } from "react";
+import type { Doctor } from "../types/DoctorType";
 
 interface ChatHeaderProps {
   currentView: CurrentViewType;
   setCurrentView: (view: CurrentViewType) => void;
-  activeChat?: {
-    id: number;
-    name: string[];
-    message: string;
-    isActive: boolean;
-  };
+  activeChat?: Doctor;
 }
 
 export const ChatHeader = ({
@@ -26,7 +22,7 @@ export const ChatHeader = ({
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const availablePeople = allChats
+  const availablePeople = allDoctors
     .filter((chat) => chat.name.length === 1)
     .filter((chat) =>
       chat.name[0].toLowerCase().includes(searchQuery.toLowerCase())
@@ -85,7 +81,7 @@ export const ChatHeader = ({
                 ? activeChat.name[0]
                 : activeChat?.name.join(", ")}
             </span>
-            <span className="text-[#93A1B8]">Medical Oncologist</span>
+            <span className="text-[#93A1B8]">{activeChat?.occupation}</span>
           </div>
         </div>
       )}

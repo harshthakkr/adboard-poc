@@ -3,16 +3,16 @@ import "./App.css";
 import { Chat } from "./components/Chat";
 import { ChatsList } from "./components/ChatsList";
 import { Navbar } from "./components/Navbar";
-import allChats from "./data/chats.json";
+import allDoctors from "./data/doctor.json";
 import { CurrentView, type CurrentViewType } from "./types/CurrentView";
 
 function App() {
-  const [activeChatId, setActiveChatId] = useState<number>(allChats[0].id);
+  const [activeChatId, setActiveChatId] = useState<number>(allDoctors[0].id);
   const [currentView, setCurrentView] = useState<CurrentViewType>(
     CurrentView.CHAT
   );
   const [isTranscriptionOn, setIsTranscriptionOn] = useState(false);
-  const activeChat = allChats.find((chat) => chat.id === activeChatId);
+  const activeChat = allDoctors.find((chat) => chat.id === activeChatId);
 
   return (
     <div className="min-h-screen bg-gray-100">

@@ -4,14 +4,10 @@ import { VideoCall } from "./VideoCall";
 import { GroupVideoCall } from "./GroupVideoCall";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 import { Transcription } from "./Transcription";
+import type { Doctor } from "../types/DoctorType";
 
 interface ChatProps {
-  activeChat?: {
-    id: number;
-    name: string[];
-    message: string;
-    isActive: boolean;
-  };
+  activeChat?: Doctor;
   currentView: CurrentViewType;
   setCurrentView: (view: CurrentViewType) => void;
   isTranscriptionOn: boolean;

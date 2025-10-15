@@ -1,6 +1,6 @@
 import { ChatItem } from "./ChatItem";
 import notePencilLogo from "/NotePencil.svg";
-import allChats from "../data/chats.json";
+import allDoctors from "../data/doctor.json";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 
 export const ChatsList = ({
@@ -23,7 +23,7 @@ export const ChatsList = ({
         />
       </div>
       <div className="flex flex-col gap-2 overflow-y-auto flex-1">
-        {allChats.map(
+        {allDoctors.map(
           (chat: {
             id: number;
             name: string[];
