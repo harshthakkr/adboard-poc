@@ -10,7 +10,7 @@ import background from "/ButtonImageBackground.png";
 
 export const ChatContent = () => {
   return (
-    <>
+    <div>
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col gap-[10px] px-8 mt-[37px] pb-32">
           <div className="flex flex-col gap-[10px] py-3">
@@ -87,6 +87,6 @@ export const ChatContent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

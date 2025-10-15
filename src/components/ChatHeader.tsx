@@ -2,7 +2,11 @@ import avatar from "/Avatar.png";
 import phoneIcon from "/Phone.svg";
 import videoCameraIcon from "/VideoCamera.svg";
 
-export const ChatHeader = () => {
+export const ChatHeader = ({
+  setIsVideoCall,
+}: {
+  setIsVideoCall: (value: boolean) => void;
+}) => {
   return (
     <div className="flex p-3 items-center justify-between border-b border-px border-[#EEEEEE]">
       <div className="flex gap-2">
@@ -22,7 +26,10 @@ export const ChatHeader = () => {
         <div className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full">
           <img src={phoneIcon} alt="" />
         </div>
-        <div className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full">
+        <div
+          onClick={() => setIsVideoCall(true)}
+          className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full"
+        >
           <img src={videoCameraIcon} alt="" />
         </div>
       </div>
