@@ -10,15 +10,20 @@ interface ChatHeaderProps {
   currentView: CurrentViewType;
   setCurrentView: (view: CurrentViewType) => void;
   activeChat?: Doctor;
+  selectedPeople: string[];
+  setSelectedPeople: (people: string[]) => void;
+  onProfileClick: (doctor: Doctor) => void;
 }
 
 export const ChatHeader = ({
   currentView,
   setCurrentView,
   activeChat,
+  selectedPeople,
+  setSelectedPeople,
+  onProfileClick,
 }: ChatHeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPeople, setSelectedPeople] = useState<string[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -68,15 +73,33 @@ export const ChatHeader = ({
     <div className="flex p-4 items-center justify-between border-b border-px border-[#EEEEEE]">
       {currentView !== CurrentView.NEW_CHAT && (
         <div className="flex gap-2">
-          <img
-            src={avatar}
-            alt=""
-            height={48}
-            width={48}
-            className="rounded-full"
-          />
+          {activeChat?.name.length === 1 ? (
+            <img
+              src={avatar}
+              alt=""
+              height={48}
+              width={48}
+              className="rounded-full cursor-pointer"
+              onClick={() => activeChat && onProfileClick(activeChat)}
+            />
+          ) : (
+            <div className="w-12 h-12 bg-[#F7F9FF] rounded-full flex justify-center items-center">
+              <img src="/Users.svg" alt="Users" />
+            </div>
+          )}
           <div className="flex flex-col">
-            <span className="font-medium text-[#1C274C]">
+            <span
+              className={`font-medium text-[#1C274C] ${
+                activeChat?.name.length === 1
+                  ? "cursor-pointer hover:underline"
+                  : ""
+              }`}
+              onClick={() =>
+                activeChat?.name.length === 1 &&
+                activeChat &&
+                onProfileClick(activeChat)
+              }
+            >
               {activeChat?.name.length === 1
                 ? activeChat.name[0]
                 : activeChat?.name.join(", ")}

@@ -20,9 +20,18 @@ interface ChatContentProps {
     message: string;
     isActive: boolean;
   };
+  onCreateGroup: (selectedPeople: string[], firstMessage: string) => number;
+  selectedPeople: string[];
+  setSelectedPeople: (people: string[]) => void;
 }
 
-export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
+export const ChatContent = ({
+  currentView,
+  activeChat,
+  onCreateGroup,
+  selectedPeople,
+  setSelectedPeople,
+}: ChatContentProps) => {
   const [message, setMessage] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [sentMessages, setSentMessages] = useState<Record<number, string[]>>(
@@ -44,76 +53,111 @@ export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (message.trim() && activeChat) {
-      setSentMessages((prev) => ({
-        ...prev,
-        [activeChat.id]: [...(prev[activeChat.id] || []), message],
-      }));
-      setMessage("");
-      setFiles([]);
+    if (message.trim()) {
+      // Handle NEW_CHAT view: create group if 2+ people selected
+      if (currentView === CurrentView.NEW_CHAT && selectedPeople.length >= 2) {
+        const newGroupId = onCreateGroup(selectedPeople, message);
+        setSentMessages((prev) => ({
+          ...prev,
+          [newGroupId]: [message],
+        }));
+        setMessage("");
+        setFiles([]);
+        setSelectedPeople([]);
+      }
+      // Handle regular chat or single person new chat
+      else if (activeChat) {
+        setSentMessages((prev) => ({
+          ...prev,
+          [activeChat.id]: [...(prev[activeChat.id] || []), message],
+        }));
+        setMessage("");
+        setFiles([]);
+      }
+      // Handle single person in NEW_CHAT (create individual chat)
+      else if (
+        currentView === CurrentView.NEW_CHAT &&
+        selectedPeople.length === 1
+      ) {
+        const newGroupId = onCreateGroup(selectedPeople, message);
+        setSentMessages((prev) => ({
+          ...prev,
+          [newGroupId]: [message],
+        }));
+        setMessage("");
+        setFiles([]);
+        setSelectedPeople([]);
+      }
     }
   };
 
-  // Auto-scroll to bottom when new messages are sent
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [sentMessages, activeChat]);
 
-  // Get messages for the current active chat
   const currentChatMessages = activeChat
     ? sentMessages[activeChat.id] || []
     : [];
 
+  // Only show hardcoded messages for original chats (id <= 9), not for new groups
+  const isOriginalChat = activeChat && activeChat.id <= 9;
+
   return (
-    <div className="h-full relative flex flex-col">
-      <div className="flex-1 overflow-y-auto" ref={scrollRef}>
+    <div className="h-full flex flex-col">
+      <div className="flex-1 overflow-y-auto px-8" ref={scrollRef}>
         {currentView === CurrentView.CHAT ? (
-          <div className="flex flex-col gap-[10px] px-8 mt-[37px] pb-40">
-            <div className="flex flex-col gap-[10px] py-3">
-              <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
-                For patients who are NPO (nothing by mouth) prior to a procedure
-                or may have GI prep that could impact absorption, there isn't a
-                specific adjustment required for Zepzelca, since it's
-                administered as an intravenous infusion. Standard dosing can
-                typically proceed as scheduled, but if the procedure timing
-                overlaps with an infusion day, it's generally recommended to
-                coordinate with the GI and infusion teams to avoid conflicts. If
-                the patient is experiencing any significant changes in renal or
-                hepatic function related to the procedure or prep, additional
-                monitoring or dose adjustments may be warranted, in line with
-                the prescribing information.
-              </p>
-              <div className="flex gap-[10px]">
-                <img src={copyIcon} alt="" className="p-1" />
-                <img src={speakerHighIcon} alt="" />
-                <img src={thumbsUpIcon} alt="" />
-                <img src={thumbsDownIcon} alt="" />
-                <img src={magicStickIcon} alt="" />
-                <img src={arrowsClockwiseIcon} alt="" />
-              </div>
-            </div>
-            <div className="flex justify-end">
-              <p className="bg-[#4B7BFF] w-[406px] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px]">
-                {activeChat?.message}
-              </p>
-            </div>
-            <div className="flex flex-col gap-[10px] py-3">
-              <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
-                For patients who are NPO (nothing by mouth) prior to a procedure
-                or may have GI prep that could impact absorption, there isn't a
-                specific adjustment required for Zepzelca, since it's
-                administered as an intravenous infusion. Standard dosing can
-                typically proceed as scheduled, but if the procedure timing
-                overlaps with an infusion day, it's generally recommended to
-                coordinate with the GI and infusion teams to avoid conflicts. If
-                the patient is experiencing any significant changes in renal or
-                hepatic function related to the procedure or prep, additional
-                monitoring or dose adjustments may be warranted, in line with
-                the prescribing information.
-              </p>
-            </div>
+          <div className="flex flex-col gap-[10px] mt-[37px] pb-4">
+            {isOriginalChat && (
+              <>
+                <div className="flex flex-col gap-[10px] py-3">
+                  <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
+                    For patients who are NPO (nothing by mouth) prior to a
+                    procedure or may have GI prep that could impact absorption,
+                    there isn't a specific adjustment required for Zepzelca,
+                    since it's administered as an intravenous infusion. Standard
+                    dosing can typically proceed as scheduled, but if the
+                    procedure timing overlaps with an infusion day, it's
+                    generally recommended to coordinate with the GI and infusion
+                    teams to avoid conflicts. If the patient is experiencing any
+                    significant changes in renal or hepatic function related to
+                    the procedure or prep, additional monitoring or dose
+                    adjustments may be warranted, in line with the prescribing
+                    information.
+                  </p>
+                  <div className="flex gap-[10px]">
+                    <img src={copyIcon} alt="" className="p-1" />
+                    <img src={speakerHighIcon} alt="" />
+                    <img src={thumbsUpIcon} alt="" />
+                    <img src={thumbsDownIcon} alt="" />
+                    <img src={magicStickIcon} alt="" />
+                    <img src={arrowsClockwiseIcon} alt="" />
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <p className="bg-[#4B7BFF] w-[406px] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px]">
+                    {activeChat?.message}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-[10px] py-3">
+                  <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
+                    For patients who are NPO (nothing by mouth) prior to a
+                    procedure or may have GI prep that could impact absorption,
+                    there isn't a specific adjustment required for Zepzelca,
+                    since it's administered as an intravenous infusion. Standard
+                    dosing can typically proceed as scheduled, but if the
+                    procedure timing overlaps with an infusion day, it's
+                    generally recommended to coordinate with the GI and infusion
+                    teams to avoid conflicts. If the patient is experiencing any
+                    significant changes in renal or hepatic function related to
+                    the procedure or prep, additional monitoring or dose
+                    adjustments may be warranted, in line with the prescribing
+                    information.
+                  </p>
+                </div>
+              </>
+            )}
             {currentChatMessages.map((msg, index) => (
               <div key={index} className="flex justify-end">
                 <p className="bg-[#4B7BFF] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px] max-w-[406px]">
@@ -122,11 +166,24 @@ export const ChatContent = ({ currentView, activeChat }: ChatContentProps) => {
               </div>
             ))}
           </div>
-        ) : (
-          ""
-        )}
+        ) : currentView === CurrentView.NEW_CHAT ? (
+          <div className="flex flex-col gap-[10px] mt-[37px] pb-4">
+            <div className="text-center text-gray-400 mt-8">
+              {selectedPeople.length === 0 ? (
+                <p>Select people to start a conversation</p>
+              ) : selectedPeople.length === 1 ? (
+                <p>Send a message to {selectedPeople[0]}</p>
+              ) : (
+                <p>
+                  Send a message to create a group with{" "}
+                  {selectedPeople.join(", ")}
+                </p>
+              )}
+            </div>
+          </div>
+        ) : null}
       </div>
-      <div className="absolute w-[calc(100%-64px)] left-8 flex flex-col gap-4 p-4 rounded-[16px] bottom-4 border border-px border-[#EEEEEE] z-50 bg-white">
+      <div className="flex-shrink-0 mx-8 mb-4 flex flex-col gap-4 p-4 rounded-[16px] border border-px border-[#EEEEEE] bg-white">
         {files.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {files.map((file) => (

@@ -1,13 +1,15 @@
 import { ChatItem } from "./ChatItem";
 import notePencilLogo from "/NotePencil.svg";
-import allDoctors from "../data/doctor.json";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
+import type { Doctor } from "../types/DoctorType";
 
 export const ChatsList = ({
+  chats,
   activeChatId,
   setActiveChatId,
   setCurrentView,
 }: {
+  chats: Doctor[];
   activeChatId: number;
   setActiveChatId: (id: number) => void;
   setCurrentView: (view: CurrentViewType) => void;
@@ -20,32 +22,23 @@ export const ChatsList = ({
           src={notePencilLogo}
           alt=""
           onClick={() => setCurrentView(CurrentView.NEW_CHAT)}
+          className="cursor-pointer"
         />
       </div>
       <div className="flex flex-col gap-2 overflow-y-auto flex-1">
-        {allDoctors.map(
-          (chat: {
-            id: number;
-            name: string[];
-            message: string;
-            isActive: boolean;
-          }) => {
-            return (
-              <ChatItem
-                name={
-                  chat.name.length === 1 ? chat.name[0] : chat.name.join(", ")
-                }
-                message={chat.message}
-                isActive={chat.id === activeChatId}
-                onClick={() => {
-                  setActiveChatId(chat.id);
-                  setCurrentView(CurrentView.CHAT);
-                }}
-                key={chat.id}
-              />
-            );
-          }
-        )}
+        {chats.map((chat) => (
+          <ChatItem
+            key={chat.id}
+            name={chat.name.length === 1 ? chat.name[0] : chat.name.join(", ")}
+            message={chat.message}
+            isActive={chat.id === activeChatId}
+            onClick={() => {
+              setActiveChatId(chat.id);
+              setCurrentView(CurrentView.CHAT);
+            }}
+            isGroup={chat.name.length > 1}
+          />
+        ))}
       </div>
     </div>
   );

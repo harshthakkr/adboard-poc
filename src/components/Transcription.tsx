@@ -1,3 +1,4 @@
+import { SecondaryHeader } from "./SecondaryHeader";
 import { TranscriptionMessage } from "./TranscriptionMessage";
 
 export const Transcription = ({
@@ -7,15 +8,7 @@ export const Transcription = ({
 }) => {
   return (
     <div className="absolute w-[520px] z-100 h-full flex flex-col gap-6 bg-white top-0 right-0 px-5 py-4">
-      <div className="flex justify-between items-center flex-shrink-0">
-        <h2 className="font-semibold">Transcription</h2>
-        <img
-          src="/X-3.svg"
-          alt="Close Icon"
-          onClick={() => setIsTranscriptionOn(false)}
-          className="cursor-pointer"
-        />
-      </div>
+      <SecondaryHeader title="Transcription" set={setIsTranscriptionOn} />
       <div className="space-y-2 overflow-y-auto flex-1">
         <TranscriptionMessage
           image="/Avatar.png"
