@@ -11,11 +11,12 @@ function App() {
   const [currentView, setCurrentView] = useState<CurrentViewType>(
     CurrentView.CHAT
   );
+  const [isTranscriptionOn, setIsTranscriptionOn] = useState(false);
   const activeChat = allChats.find((chat) => chat.id === activeChatId);
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar />
+      <Navbar setIsTranscriptionOn={setIsTranscriptionOn} />
       <div className="flex gap-3 px-8 py-4">
         <ChatsList
           activeChatId={activeChatId}
@@ -26,6 +27,8 @@ function App() {
           activeChat={activeChat}
           currentView={currentView}
           setCurrentView={setCurrentView}
+          isTranscriptionOn={isTranscriptionOn}
+          setIsTranscriptionOn={setIsTranscriptionOn}
         />
       </div>
     </div>

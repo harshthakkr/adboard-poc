@@ -3,6 +3,7 @@ import { ChatHeader } from "./ChatHeader";
 import { VideoCall } from "./VideoCall";
 import { GroupVideoCall } from "./GroupVideoCall";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
+import { Transcription } from "./Transcription";
 
 interface ChatProps {
   activeChat?: {
@@ -13,12 +14,16 @@ interface ChatProps {
   };
   currentView: CurrentViewType;
   setCurrentView: (view: CurrentViewType) => void;
+  isTranscriptionOn: boolean;
+  setIsTranscriptionOn: (isOn: boolean) => void;
 }
 
 export const Chat = ({
   activeChat,
   setCurrentView,
   currentView,
+  isTranscriptionOn,
+  setIsTranscriptionOn,
 }: ChatProps) => {
   const handleViewChange = (view: CurrentViewType) => {
     setCurrentView(view);
@@ -31,13 +36,18 @@ export const Chat = ({
         setCurrentView={handleViewChange}
         activeChat={activeChat}
       />
-      {currentView === CurrentView.GROUP_VIDEO_CALL ? (
-        <GroupVideoCall setCurrentView={handleViewChange} />
-      ) : currentView === CurrentView.VIDEO_CALL ? (
-        <VideoCall setCurrentView={handleViewChange} />
-      ) : (
-        <ChatContent currentView={currentView} activeChat={activeChat} />
-      )}
+      <div className="relative flex-1 overflow-hidden">
+        {currentView === CurrentView.GROUP_VIDEO_CALL ? (
+          <GroupVideoCall setCurrentView={handleViewChange} />
+        ) : currentView === CurrentView.VIDEO_CALL ? (
+          <VideoCall setCurrentView={handleViewChange} />
+        ) : (
+          <ChatContent currentView={currentView} activeChat={activeChat} />
+        )}
+        {isTranscriptionOn && (
+          <Transcription setIsTranscriptionOn={setIsTranscriptionOn} />
+        )}
+      </div>
     </div>
   );
 };

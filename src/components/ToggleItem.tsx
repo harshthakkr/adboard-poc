@@ -4,12 +4,14 @@ export const ToggleItem = ({
   icon,
   alt,
   title,
-  isActive = false,
+  isActive,
+  setIsTranscriptionOn,
 }: {
   icon: string;
   alt: string;
   title: string;
   isActive?: boolean;
+  setIsTranscriptionOn?: (value: boolean) => void;
 }) => {
   return (
     <div
@@ -23,6 +25,7 @@ export const ToggleItem = ({
       }
     >
       <div
+        onClick={() => setIsTranscriptionOn && setIsTranscriptionOn(true)}
         className={`flex gap-2 px-5 py-3 text-[#93A1B8] rounded-full ${
           isActive ? "text-white" : ""
         }`}

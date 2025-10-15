@@ -6,7 +6,7 @@ export const VideoCall = ({
   setCurrentView: (view: CurrentViewType) => void;
 }) => {
   return (
-    <>
+    <div className="h-full relative flex flex-col">
       <div className="flex-1 overflow-y-auto">
         <div className="px-8 mt-[37px] pb-24">
           <div className="relative">
@@ -52,6 +52,6 @@ export const VideoCall = ({
           <img src="/Phone-2.svg" alt="" />
         </div>
       </div>
-    </>
+    </div>
   );
 };

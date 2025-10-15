@@ -70,7 +70,7 @@ export const ChatHeader = ({
 
   return (
     <div className="flex p-4 items-center justify-between border-b border-px border-[#EEEEEE]">
-      {currentView === CurrentView.CHAT && (
+      {currentView !== CurrentView.NEW_CHAT && (
         <div className="flex gap-2">
           <img
             src={avatar}
