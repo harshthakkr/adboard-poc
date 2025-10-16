@@ -1,4 +1,5 @@
 import { ToggleItem } from "./ToggleItem";
+import { ICONS } from "../constants/icons";
 
 export const Navbar = ({
   setIsTranscriptionOn,
@@ -7,30 +8,29 @@ export const Navbar = ({
 }) => {
   return (
     <nav className="flex items-center justify-center px-8 py-3">
-      <img src="/logo.svg" alt="Application Logo" className="absolute left-8" />
+      <img
+        src={ICONS.LOGO}
+        alt="Application Logo"
+        className="absolute left-8"
+      />
       <div className="flex items-center gap-2 p-2 border-2 border-white h-[52px] bg-white/80 rounded-full">
         <ToggleItem
-          icon="/SquaresFour.svg"
+          icon={ICONS.DASHBOARD}
           alt="Dashboard icon"
           title="Dashboard"
         />
         <ToggleItem
-          icon="/MagicWand.svg"
+          icon={ICONS.INSIGHTS}
           alt="Insights icon"
           title="Insights"
         />
         <ToggleItem
-          icon="/Notebook.svg"
+          icon={ICONS.TRANSCRIPT}
           alt="Transcript icon"
           title="Transcript"
           setIsTranscriptionOn={setIsTranscriptionOn}
         />
-        <ToggleItem
-          icon="/ChatCircle.svg"
-          alt="Chat icon"
-          title="Chat"
-          isActive
-        />
+        <ToggleItem icon={ICONS.CHAT} alt="Chat icon" title="Chat" isActive />
       </div>
     </nav>
   );

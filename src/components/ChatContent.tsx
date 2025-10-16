@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import background from "/ButtonImageBackground.png";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
+import { MessageActionButton } from "./common/MessageActionButton";
+import { GradientButton } from "./common/GradientButton";
+import { ICONS } from "../constants/icons";
 
 interface ChatContentProps {
   currentView: CurrentViewType;
@@ -97,7 +99,7 @@ export const ChatContent = ({
             {isOriginalChat && (
               <>
                 <div className="flex flex-col gap-[10px] py-3">
-                  <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
+                  <p className="px-4 py-3 bg-bg-message text-text-primary rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
                     For patients who are NPO (nothing by mouth) prior to a
                     procedure or may have GI prep that could impact absorption,
                     there isn't a specific adjustment required for Zepzelca,
@@ -112,45 +114,36 @@ export const ChatContent = ({
                     information.
                   </p>
                   <div className="flex gap-[10px]">
-                    <img
-                      src="/Copy.svg"
-                      alt="Copy message"
-                      className="p-1 cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded"
-                    />
-                    <img
-                      src="/SpeakerHigh.svg"
+                    <MessageActionButton icon={ICONS.COPY} alt="Copy message" />
+                    <MessageActionButton
+                      icon={ICONS.SPEAKER_HIGH}
                       alt="Read aloud"
-                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
                     />
-                    <img
-                      src="/ThumbsUp.svg"
+                    <MessageActionButton
+                      icon={ICONS.THUMBS_UP}
                       alt="Thumbs up"
-                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
                     />
-                    <img
-                      src="/ThumbsDown.svg"
+                    <MessageActionButton
+                      icon={ICONS.THUMBS_DOWN}
                       alt="Thumbs down"
-                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
                     />
-                    <img
-                      src="/MagicStick4.svg"
+                    <MessageActionButton
+                      icon={ICONS.MAGIC_STICK}
                       alt="AI enhance"
-                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
                     />
-                    <img
-                      src="/ArrowsClockwise.svg"
+                    <MessageActionButton
+                      icon={ICONS.ARROWS_CLOCKWISE}
                       alt="Regenerate"
-                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
                     />
                   </div>
                 </div>
                 <div className="flex justify-end">
-                  <p className="bg-[#4B7BFF] w-[406px] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px]">
+                  <p className="bg-primary-blue w-[406px] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px]">
                     {activeChat?.message}
                   </p>
                 </div>
                 <div className="flex flex-col gap-[10px] py-3">
-                  <p className="px-4 py-3 bg-[#F6F6F6] text-[#1C274C] rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
+                  <p className="px-4 py-3 bg-bg-message text-text-primary rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
                     For patients who are NPO (nothing by mouth) prior to a
                     procedure or may have GI prep that could impact absorption,
                     there isn't a specific adjustment required for Zepzelca,
@@ -169,7 +162,7 @@ export const ChatContent = ({
             )}
             {currentChatMessages.map((msg, index) => (
               <div key={index} className="flex justify-end">
-                <p className="bg-[#4B7BFF] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px] max-w-[406px]">
+                <p className="bg-primary-blue px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px] max-w-[406px]">
                   {msg}
                 </p>
               </div>
@@ -194,7 +187,7 @@ export const ChatContent = ({
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
-      <div className="flex-shrink-0 mx-8 mb-4 flex flex-col gap-4 p-4 rounded-[16px] border border-px border-[#EEEEEE] bg-white relative z-10">
+      <div className="flex-shrink-0 mx-8 mb-4 flex flex-col gap-4 p-4 rounded-[16px] border border-px border-border-light bg-white relative z-10">
         {files.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {files.map((file) => (
@@ -204,9 +197,10 @@ export const ChatContent = ({
               >
                 <button
                   onClick={() => removeFile(file)}
-                  className="absolute -top-1 -right-1 bg-[#EBF0FF] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#D6E4FF] hover:scale-110 active:scale-95 transition-all duration-200"
+                  className="absolute -top-1 -right-1 bg-bg-hover rounded-full flex items-center justify-center cursor-pointer hover:bg-bg-hover-dark hover:scale-110 active:scale-95 transition-all duration-200"
+                  aria-label="Remove file"
                 >
-                  <img src="/x.svg" alt="Remove file" className="w-4 h-4" />
+                  <img src={ICONS.X} alt="Remove file" className="w-4 h-4" />
                 </button>
                 {file.type.startsWith("image/") ? (
                   <img
@@ -238,37 +232,20 @@ export const ChatContent = ({
             <div {...getRootProps()}>
               <input {...getInputProps()} />
               <img
-                src="/IconButton.svg"
+                src={ICONS.ICON_BUTTON}
                 alt="Attach files"
                 height={40}
                 width={40}
                 className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200"
               />
             </div>
-            <div
-              className="p-[1px] rounded-full hover:scale-105 active:scale-95 transition-transform duration-200"
-              style={{
-                background: "linear-gradient(to bottom, #013BDB, #77C0FF)",
-              }}
-            >
-              <button
-                type="submit"
-                className="flex justify-center items-center h-10 w-10 text-[#93A1B8] rounded-full cursor-pointer"
-                style={{
-                  backgroundImage: `url(${background}), linear-gradient(to bottom, #013BDB, #2C62F7)`,
-                  backgroundBlendMode: "normal",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <img
-                  src="/ArrowUp.svg"
-                  alt="Send message"
-                  className="relative z-10"
-                />
-              </button>
-            </div>
+            <GradientButton type="submit">
+              <img
+                src={ICONS.ARROW_UP}
+                alt="Send message"
+                className="relative z-10"
+              />
+            </GradientButton>
           </div>
         </form>
       </div>

@@ -1,4 +1,6 @@
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
+import { VideoCallControls } from "./common/VideoCallControls";
+import { ICONS } from "../constants/icons";
 
 export const VideoCall = ({
   setCurrentView,
@@ -11,12 +13,12 @@ export const VideoCall = ({
         <div className="px-8 mt-[37px] pb-24">
           <div className="relative">
             <img
-              src="/VideoCallPerson-1.jpg"
+              src={ICONS.VIDEO_CALL_PERSON_1}
               alt="Dr Ramakrishnan in video call"
-              className="rounded-3xl border-4 border-[#06C270]"
+              className="rounded-3xl border-4 border-success"
             />
-            <div className="flex justify-center items-center absolute top-6 right-6 border-[1.71px] border-[#EEEEEE] bg-white h-12 w-12 rounded-full">
-              <img src="/Waveform.svg" alt="Speaking indicator" />
+            <div className="flex justify-center items-center absolute top-6 right-6 border-[1.71px] border-border-light bg-white h-12 w-12 rounded-full">
+              <img src={ICONS.WAVEFORM} alt="Speaking indicator" />
             </div>
             <div className="absolute left-6 bottom-6 bg-black/30 text-white font-medium text-xl px-6 py-1 rounded-full">
               Dr Ramakrishnan
@@ -25,7 +27,7 @@ export const VideoCall = ({
           <div className="flex justify-end mt-4">
             <div className="relative">
               <img
-                src="/VideoCallPerson-2.jpg"
+                src={ICONS.VIDEO_CALL_PERSON_2}
                 alt="Your video"
                 height={124}
                 width={220}
@@ -38,32 +40,10 @@ export const VideoCall = ({
           </div>
         </div>
       </div>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-8 bg-[#F8F8F880]/50 border-2 border-white px-8 py-2 rounded-full z-50">
-        <div className="flex justify-center items-center w-11 h-11 rounded-full cursor-pointer hover:bg-white/30 active:scale-95 transition-all duration-200">
-          <img
-            src="/Microphone.svg"
-            alt="Toggle microphone"
-            className="hover:scale-110 transition-transform duration-200"
-          />
-        </div>
-        <div className="flex justify-center items-center w-11 h-11 rounded-full cursor-pointer hover:bg-white/30 active:scale-95 transition-all duration-200">
-          <img
-            src="/ChatCircle-2.svg"
-            alt="Open chat"
-            className="hover:scale-110 transition-transform duration-200"
-          />
-        </div>
-        <div
-          onClick={() => setCurrentView(CurrentView.CHAT)}
-          className="flex justify-center items-center w-11 h-11 rounded-full bg-[#EE4D37] cursor-pointer hover:bg-[#D63C27] active:scale-95 transition-all duration-200"
-        >
-          <img
-            src="/Phone-2.svg"
-            alt="End call"
-            className="hover:scale-110 transition-transform duration-200"
-          />
-        </div>
-      </div>
+      <VideoCallControls
+        onEndCall={() => setCurrentView(CurrentView.CHAT)}
+        variant="individual"
+      />
     </div>
   );
 };

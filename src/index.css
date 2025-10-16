@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+@theme {
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --color-primary-blue: #4b7bff;
+  --color-primary-blue-dark: #013bdb;
+  --color-primary-blue-mid: #2c62f7;
+  --color-primary-blue-light: #77c0ff;
+
+  --color-bg-app: #f9faff;
+  --color-bg-message: #f6f6f6;
+  --color-bg-hover: #ebf0ff;
+  --color-bg-hover-dark: #d6e4ff;
+  --color-bg-group: #f7f9ff;
+  --color-bg-controls: #f8f8f880;
+
+  --color-text-primary: #1c274c;
+  --color-text-secondary: #93a1b8;
+  --color-text-muted: #53596c;
+  --color-text-dark: #16191d;
+
+  --color-border-light: #eeeeee;
+
+  --color-success: #06c270;
+  --color-danger: #ee4d37;
+  --color-danger-hover: #d63c27;
+}
+
+* {
+  font-family: var(--font-body);
+}

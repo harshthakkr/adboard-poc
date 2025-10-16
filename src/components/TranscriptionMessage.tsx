@@ -1,3 +1,5 @@
+import { Avatar } from "./common/Avatar";
+
 export const TranscriptionMessage = ({
   image,
   name,
@@ -9,16 +11,10 @@ export const TranscriptionMessage = ({
 }) => {
   return (
     <div className="flex gap-4 items-start">
-      <img
-        src={image}
-        alt={`${name}'s avatar`}
-        height={24}
-        width={24}
-        className="rounded-full"
-      />
+      <Avatar src={image} alt={`${name}'s avatar`} size="small" />
       <div className="flex flex-col gap-1">
-        <span className="text-[#93A1B8]">{name}</span>
-        <span className="text-[#16191D]">{message}</span>
+        <span className="text-text-secondary">{name}</span>
+        <span className="text-text-dark">{message}</span>
       </div>
     </div>
   );

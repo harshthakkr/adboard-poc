@@ -5,6 +5,8 @@ import { PublicationTab } from "./PublicationTab";
 import { SocialMediaTab } from "./SocialMediaTab";
 import { PatientCasesTab } from "./PatientCasesTab";
 import type { Doctor } from "../types/DoctorType";
+import { Avatar } from "./common/Avatar";
+import { ICONS } from "../constants/icons";
 
 export const Profile = ({
   setIsProfileOpen,
@@ -14,22 +16,17 @@ export const Profile = ({
   doctor: Doctor;
 }) => {
   const [currentTab, setCurrentTab] = useState("Patient Cases");
+
   return (
     <div className="absolute right-3 top-3 w-[512px] h-[calc(100%-24px)] flex flex-col gap-4 bg-blue-100 px-5 py-4 rounded-2xl z-50">
       <SecondaryHeader title="Info" set={setIsProfileOpen} />
       <div className="flex items-center gap-4">
-        <img
-          src="/Avatar.png"
-          alt="Doctor Profile"
-          height={50}
-          width={50}
-          className="rounded-full"
-        />
+        <Avatar src={ICONS.AVATAR} alt="Doctor Profile" size="large" />
         <div className="flex flex-col">
           <h1 className="font-semibold text-2xl">
             {doctor.name.length === 1 ? doctor.name[0] : doctor.name.join(", ")}
           </h1>
-          <span className="text-[#93A1B8]">{doctor.occupation}</span>
+          <span className="text-text-secondary">{doctor.occupation}</span>
         </div>
       </div>
       <div className="flex gap-3">

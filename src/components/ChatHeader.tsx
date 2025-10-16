@@ -1,8 +1,10 @@
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
-import avatar from "/Avatar.png";
-import allDoctors from "../data/doctor.json";
 import { useState, useRef, useEffect } from "react";
 import type { Doctor } from "../types/DoctorType";
+import { Avatar } from "./common/Avatar";
+import { IconButton } from "./common/IconButton";
+import { ICONS } from "../constants/icons";
+import allDoctors from "../data/doctor.json";
 
 interface ChatHeaderProps {
   currentView: CurrentViewType;
@@ -68,26 +70,27 @@ export const ChatHeader = ({
   }, []);
 
   return (
-    <div className="flex p-4 items-center justify-between border-b border-px border-[#EEEEEE]">
+    <div className="flex p-4 items-center justify-between border-b border-px border-border-light">
       {currentView !== CurrentView.NEW_CHAT && (
         <div className="flex gap-2">
-          {activeChat?.name.length === 1 ? (
-            <img
-              src={avatar}
-              alt={`${activeChat.name[0]}'s avatar`}
-              height={48}
-              width={48}
-              className="rounded-full cursor-pointer"
-              onClick={() => activeChat && onProfileClick(activeChat)}
-            />
-          ) : (
-            <div className="w-12 h-12 bg-[#F7F9FF] rounded-full flex justify-center items-center">
-              <img src="/Users.svg" alt="Group chat" />
-            </div>
-          )}
+          <Avatar
+            src={ICONS.AVATAR}
+            alt={
+              activeChat?.name.length === 1
+                ? `${activeChat.name[0]}'s avatar`
+                : "Group chat"
+            }
+            size="medium"
+            onClick={
+              activeChat?.name.length === 1 && activeChat
+                ? () => onProfileClick(activeChat)
+                : undefined
+            }
+            isGroup={activeChat?.name.length !== 1}
+          />
           <div className="flex flex-col">
             <span
-              className={`font-medium text-[#1C274C] ${
+              className={`font-medium text-text-primary ${
                 activeChat?.name.length === 1
                   ? "cursor-pointer hover:underline"
                   : ""
@@ -102,7 +105,9 @@ export const ChatHeader = ({
                 ? activeChat.name[0]
                 : activeChat?.name.join(", ")}
             </span>
-            <span className="text-[#93A1B8]">{activeChat?.occupation}</span>
+            <span className="text-text-secondary">
+              {activeChat?.occupation}
+            </span>
           </div>
         </div>
       )}
@@ -111,25 +116,26 @@ export const ChatHeader = ({
           <h2 className="text-lg font-semibold">New Message</h2>
           <div className="relative" ref={dropdownRef}>
             <div className="flex items-end gap-2">
-              <span className="text-[#93A1B8]">To:</span>
+              <span className="text-text-secondary">To:</span>
               <div className="flex flex-wrap gap-1 flex-1">
                 {selectedPeople.map((person) => (
                   <div
                     key={person}
-                    className="flex items-center gap-1 bg-[#EBF0FF] p-1 pr-2 rounded-full transition-all duration-200 hover:bg-[#D6E4FF] hover:scale-105"
+                    className="flex items-center gap-1 bg-bg-hover p-1 pr-2 rounded-full transition-all duration-200 hover:bg-bg-hover-dark hover:scale-105"
                   >
-                    <img
-                      src={avatar}
+                    <Avatar
+                      src={ICONS.AVATAR}
                       alt={`${person}'s avatar`}
-                      className="w-5 h-5 rounded-full"
+                      size="small"
                     />
                     <span className="text-sm">{person}</span>
                     <button
                       onClick={() => removePerson(person)}
                       className="text-gray-500 hover:text-gray-700 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200"
+                      aria-label="Remove person"
                     >
                       <img
-                        src="/X-2.svg"
+                        src={ICONS.X_2}
                         alt="Remove"
                         width="12px"
                         height="12px"
@@ -153,23 +159,23 @@ export const ChatHeader = ({
               </div>
             </div>
             {showDropdown && availablePeople.length > 0 && (
-              <div className="absolute top-full left-0 w-[346px] mt-3 px-3 py-2 bg-white border border-[#EEEEEE] rounded-lg shadow-lg max-h-52 overflow-y-auto z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-full left-0 w-[346px] mt-3 px-3 py-2 bg-white border border-border-light rounded-lg shadow-lg max-h-52 overflow-y-auto z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                 {availablePeople.map((chat) => (
                   <div
                     key={chat.id}
                     onClick={() => addPerson(chat.name[0])}
-                    className="flex items-center gap-2 px-2 py-3 hover:bg-[#EBF0FF] hover:rounded-xl border-b border-px border-[#EEEEEE] cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                    className="flex items-center gap-2 px-2 py-3 hover:bg-bg-hover hover:rounded-xl border-b border-px border-border-light cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    <img
-                      src={avatar}
+                    <Avatar
+                      src={ICONS.AVATAR}
                       alt={`${chat.name[0]}'s avatar`}
-                      className="w-8 h-8 rounded-full"
+                      size="small"
                     />
                     <div className="flex-1 min-w-0">
-                      <div className="font-medium text-sm text-[#1C274C]">
+                      <div className="font-medium text-sm text-text-primary">
                         {chat.name[0]}
                       </div>
-                      <div className="text-sm text-[#93A1B8] truncate">
+                      <div className="text-sm text-text-secondary truncate">
                         {chat.message}
                       </div>
                     </div>
@@ -181,23 +187,13 @@ export const ChatHeader = ({
         </div>
       )}
       <div className="flex gap-3">
-        <div className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full cursor-pointer hover:bg-[#EBF0FF] hover:border-[#4B7BFF] active:scale-95 transition-all duration-200">
-          <img
-            src="/Phone.svg"
-            alt="Voice call"
-            className="transition-transform duration-200 hover:scale-110"
-          />
-        </div>
-        <div
+        <IconButton icon={ICONS.PHONE} alt="Voice call" variant="default" />
+        <IconButton
+          icon={ICONS.VIDEO_CAMERA}
+          alt="Video call"
+          variant="default"
           onClick={() => setCurrentView(CurrentView.VIDEO_CALL)}
-          className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full cursor-pointer hover:bg-[#EBF0FF] hover:border-[#4B7BFF] active:scale-95 transition-all duration-200"
-        >
-          <img
-            src="/VideoCamera.svg"
-            alt="Video call"
-            className="transition-transform duration-200 hover:scale-110"
-          />
-        </div>
+        />
       </div>
     </div>
   );

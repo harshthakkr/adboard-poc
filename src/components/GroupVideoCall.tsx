@@ -1,5 +1,7 @@
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 import { VideoCallScreen } from "./VideoCallScreen";
+import { VideoCallControls } from "./common/VideoCallControls";
+import { ICONS } from "../constants/icons";
 
 export const GroupVideoCall = ({
   setCurrentView,
@@ -11,82 +13,60 @@ export const GroupVideoCall = ({
       <div className="flex-1 overflow-y-auto px-8 mt-[37px] pb-24">
         <div className="grid grid-cols-3 gap-4">
           <VideoCallScreen
-            image="/VideoCallPerson-1.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_1}
             alt="Dr Ramakrishnan in video call"
             name="Dr Ramakrishnan"
             isSpeaking
           />
           <VideoCallScreen
-            image="/VideoCallPerson-2.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_2}
             alt="Dr. Anika Verma in video call"
             name="Dr. Anika Verma"
           />
           <VideoCallScreen
-            image="/VideoCallPerson-3.png"
+            image={ICONS.VIDEO_CALL_PERSON_3}
             alt="Dr. Rajesh Malhotra in video call"
             name="Dr. Rajesh Malhotra"
           />
           <VideoCallScreen
-            image="/VideoCallPerson-1.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_1}
             alt="Dr. Anika Verma in video call"
             name="Dr. Anika Verma"
           />
           <VideoCallScreen
-            image="/VideoCallPerson-2.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_2}
             alt="Mr. Thomas Lee in video call"
             name="Mr. Thomas Lee"
           />
           <VideoCallScreen
-            image="/VideoCallPerson-2.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_2}
             alt="Ms. Emily Chen in video call"
             name="Ms. Emily Chen"
           />
           <VideoCallScreen
-            image="/VideoCallPerson-2.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_2}
             alt="Dr. Anika Verma in video call"
             name="Dr. Anika Verma"
           />
           <VideoCallScreen
-            image="/VideoCallPerson-2.jpg"
+            image={ICONS.VIDEO_CALL_PERSON_2}
             alt="Mr. Thomas Lee in video call"
             name="Mr. Thomas Lee"
           />
 
           <div>
-            <div className="col-span-1 h-[214px] mb-2 flex justify-center items-center bg-[#EBF0FF] rounded-[20px]">
-              <img src="/User.svg" alt="Your video placeholder" className="" />
+            <div className="col-span-1 h-[214px] mb-2 flex justify-center items-center bg-bg-hover rounded-[20px]">
+              <img src={ICONS.USER} alt="Your video placeholder" />
             </div>
             <span>You</span>
           </div>
         </div>
       </div>
 
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-6 rounded-full px-4 py-3 bg-[#F8F8F880] border-2 border-white">
-        <div className="flex justify-center items-center w-11 h-11 rounded-full bg-white cursor-pointer hover:bg-[#EBF0FF] active:scale-95 transition-all duration-200">
-          <img
-            src="/Microphone.svg"
-            alt="Toggle microphone"
-            className="hover:scale-110 transition-transform duration-200"
-          />
-        </div>
-        <div className="flex justify-center items-center w-11 h-11 rounded-full bg-white cursor-pointer hover:bg-[#EBF0FF] active:scale-95 transition-all duration-200">
-          <img
-            src="/ChatCircle-2.svg"
-            alt="Open chat"
-            className="hover:scale-110 transition-transform duration-200"
-          />
-        </div>
-        <div
-          onClick={() => setCurrentView(CurrentView.CHAT)}
-          className="flex justify-center items-center w-11 h-11 rounded-full bg-[#EE4D37] cursor-pointer hover:bg-[#D63C27] active:scale-95 transition-all duration-200"
-        >
-          <img
-            src="/Phone-2.svg"
-            alt="End call"
-            className="hover:scale-110 transition-transform duration-200"
-          />
-        </div>
-      </div>
+      <VideoCallControls
+        onEndCall={() => setCurrentView(CurrentView.CHAT)}
+        variant="group"
+      />
     </>
   );
 };

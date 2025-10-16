@@ -1,3 +1,5 @@
+import { Card } from "./common/Card";
+
 export const PublicationTab = ({
   publications,
 }: {
@@ -11,17 +13,14 @@ export const PublicationTab = ({
   return (
     <div className="space-y-3">
       {publications.map((publication, index) => (
-        <div
-          key={index}
-          className="space-y-2 p-3 rounded-2xl bg-white hover:shadow-md hover:scale-[1.01] active:scale-[0.99] transition-all duration-200"
-        >
-          <div className="flex justify-between font-medium text-[#53596C]">
+        <Card key={index} className="space-y-2">
+          <div className="flex justify-between font-medium text-text-muted">
             <span>{publication.journal}</span>
             <span>{publication.year}</span>
           </div>
-          <h3 className="font-semibold text-[#16191D]">{publication.title}</h3>
-          <p className="text-[#53596C]">{publication.description}</p>
-        </div>
+          <h3 className="font-semibold text-text-dark">{publication.title}</h3>
+          <p className="text-text-muted">{publication.description}</p>
+        </Card>
       ))}
     </div>
   );

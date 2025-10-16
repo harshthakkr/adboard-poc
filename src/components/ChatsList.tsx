@@ -1,7 +1,7 @@
 import { ChatItem } from "./ChatItem";
-import notePencilLogo from "/NotePencil.svg";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 import type { Doctor } from "../types/DoctorType";
+import { ICONS } from "../constants/icons";
 
 export const ChatsList = ({
   chats,
@@ -19,7 +19,7 @@ export const ChatsList = ({
       <div className="flex items-center justify-between h-[72px] py-1 flex-shrink-0">
         <h2 className="font-medium text-lg">Chats</h2>
         <img
-          src={notePencilLogo}
+          src={ICONS.NOTE_PENCIL}
           alt="New chat"
           onClick={() => setCurrentView(CurrentView.NEW_CHAT)}
           className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200"
