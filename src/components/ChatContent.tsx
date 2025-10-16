@@ -93,13 +93,16 @@ export const ChatContent = ({
 
   return (
     <div className="h-full flex flex-col relative">
-      <div className="flex-1 overflow-y-auto px-8" ref={scrollRef}>
+      <div
+        className="flex-1 overflow-y-auto px-4 md:px-6 lg:px-8"
+        ref={scrollRef}
+      >
         {currentView === CurrentView.CHAT ? (
-          <div className="flex flex-col gap-[10px] mt-[37px] pb-4">
+          <div className="flex flex-col gap-[10px] mt-4 md:mt-6 lg:mt-[37px] pb-20 md:pb-24 lg:pb-28">
             {isOriginalChat && (
               <>
                 <div className="flex flex-col gap-[10px] py-3">
-                  <p className="px-4 py-3 bg-bg-message text-text-primary rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
+                  <p className="px-3 md:px-4 py-2 md:py-3 bg-bg-message text-text-primary text-sm md:text-base rounded-tr-[16px] md:rounded-tr-[20px] rounded-br-[16px] md:rounded-br-[20px] rounded-b-[16px] md:rounded-b-[20px]">
                     For patients who are NPO (nothing by mouth) prior to a
                     procedure or may have GI prep that could impact absorption,
                     there isn't a specific adjustment required for Zepzelca,
@@ -138,12 +141,12 @@ export const ChatContent = ({
                   </div>
                 </div>
                 <div className="flex justify-end">
-                  <p className="bg-primary-blue w-[406px] px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px]">
+                  <p className="bg-primary-blue w-full md:w-[406px] px-3 md:px-4 py-2 md:py-3 font-medium text-white text-sm md:text-base rounded-tl-[24px] md:rounded-tl-[32px] rounded-b-[24px] md:rounded-b-[32px]">
                     {activeChat?.message}
                   </p>
                 </div>
                 <div className="flex flex-col gap-[10px] py-3">
-                  <p className="px-4 py-3 bg-bg-message text-text-primary rounded-tr-[20px] rounded-br-[20px] rounded-b-[20px]">
+                  <p className="px-3 md:px-4 py-2 md:py-3 bg-bg-message text-text-primary text-sm md:text-base rounded-tr-[16px] md:rounded-tr-[20px] rounded-br-[16px] md:rounded-br-[20px] rounded-b-[16px] md:rounded-b-[20px]">
                     For patients who are NPO (nothing by mouth) prior to a
                     procedure or may have GI prep that could impact absorption,
                     there isn't a specific adjustment required for Zepzelca,
@@ -162,14 +165,14 @@ export const ChatContent = ({
             )}
             {currentChatMessages.map((msg, index) => (
               <div key={index} className="flex justify-end">
-                <p className="bg-primary-blue px-4 py-3 font-medium text-white rounded-tl-[32px] rounded-b-[32px] max-w-[406px]">
+                <p className="bg-primary-blue px-3 md:px-4 py-2 md:py-3 font-medium text-white text-sm md:text-base rounded-tl-[24px] md:rounded-tl-[32px] rounded-b-[24px] md:rounded-b-[32px] max-w-full md:max-w-[406px]">
                   {msg}
                 </p>
               </div>
             ))}
           </div>
         ) : currentView === CurrentView.NEW_CHAT ? (
-          <div className="flex flex-col gap-[10px] mt-[37px] pb-4">
+          <div className="flex flex-col gap-[10px] mt-[37px] pb-20 md:pb-24 lg:pb-28">
             <div className="text-center text-gray-400 mt-8">
               {selectedPeople.length === 0 ? (
                 <p>Select people to start a conversation</p>
@@ -186,8 +189,8 @@ export const ChatContent = ({
         ) : null}
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
-      <div className="flex-shrink-0 mx-8 mb-4 flex flex-col gap-4 p-4 rounded-[16px] border border-px border-border-light bg-white relative z-10">
+      <div className="absolute bottom-0 left-0 right-0 h-20 md:h-24 lg:h-28 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"></div>
+      <div className="flex-shrink-0 mx-4 md:mx-6 lg:mx-8 mb-1.5 md:mb-2 lg:mb-4 flex flex-col gap-2 md:gap-3 lg:gap-4 p-2.5 md:p-3 lg:p-4 rounded-[12px] md:rounded-[16px] border border-px border-border-light bg-white relative z-10 shadow-lg">
         {files.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {files.map((file) => (
@@ -220,15 +223,18 @@ export const ChatContent = ({
             ))}
           </div>
         )}
-        <form onSubmit={handleSendMessage} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleSendMessage}
+          className="flex flex-col gap-2 md:gap-3 lg:gap-4"
+        >
           <input
             type="text"
             value={message}
             placeholder="Ask anything..."
             onChange={(e) => setMessage(e.target.value)}
-            className="outline-none"
+            className="outline-none text-sm md:text-base"
           />
-          <div className="flex justify-between">
+          <div className="flex justify-between items-center">
             <div {...getRootProps()}>
               <input {...getInputProps()} />
               <img
@@ -236,7 +242,7 @@ export const ChatContent = ({
                 alt="Attach files"
                 height={40}
                 width={40}
-                className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200"
+                className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 w-8 h-8 md:w-10 md:h-10"
               />
             </div>
             <GradientButton type="submit">

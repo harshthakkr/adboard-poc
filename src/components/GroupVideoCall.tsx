@@ -9,9 +9,9 @@ export const GroupVideoCall = ({
   setCurrentView: (view: CurrentViewType) => void;
 }) => {
   return (
-    <>
-      <div className="flex-1 overflow-y-auto px-8 mt-[37px] pb-24">
-        <div className="grid grid-cols-3 gap-4">
+    <div className="h-full flex flex-col relative">
+      <div className="flex-1 overflow-y-auto px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-[37px]">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 pb-20 md:pb-24">
           <VideoCallScreen
             image={ICONS.VIDEO_CALL_PERSON_1}
             alt="Dr Ramakrishnan in video call"
@@ -54,11 +54,15 @@ export const GroupVideoCall = ({
             name="Mr. Thomas Lee"
           />
 
-          <div>
-            <div className="col-span-1 h-[214px] mb-2 flex justify-center items-center bg-bg-hover rounded-[20px]">
-              <img src={ICONS.USER} alt="Your video placeholder" />
+          <div className="space-y-2 md:space-y-3">
+            <div className="h-[120px] md:h-[180px] lg:h-[214px] flex justify-center items-center bg-bg-hover rounded-[16px] md:rounded-[20px]">
+              <img
+                src={ICONS.USER}
+                alt="Your video placeholder"
+                className="w-8 h-8 md:w-12 md:h-12"
+              />
             </div>
-            <span>You</span>
+            <span className="text-sm md:text-base">You</span>
           </div>
         </div>
       </div>
@@ -67,6 +71,6 @@ export const GroupVideoCall = ({
         onEndCall={() => setCurrentView(CurrentView.CHAT)}
         variant="group"
       />
-    </>
+    </div>
   );
 };

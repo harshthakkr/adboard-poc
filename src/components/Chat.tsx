@@ -15,6 +15,7 @@ interface ChatProps {
   isTranscriptionOn: boolean;
   setIsTranscriptionOn: (isOn: boolean) => void;
   onCreateGroup: (selectedPeople: string[], firstMessage: string) => number;
+  onBackToChatList?: () => void;
 }
 
 export const Chat = ({
@@ -24,6 +25,7 @@ export const Chat = ({
   isTranscriptionOn,
   setIsTranscriptionOn,
   onCreateGroup,
+  onBackToChatList,
 }: ChatProps) => {
   const [selectedPeople, setSelectedPeople] = useState<string[]>([]);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -41,7 +43,7 @@ export const Chat = ({
   };
 
   return (
-    <div className="w-full h-[calc(100vh-120px)] rounded-t-[20px] bg-white relative flex flex-col">
+    <div className="w-full h-[calc(100vh-140px)] md:h-[calc(100vh-130px)] lg:h-[calc(100vh-120px)] rounded-t-[12px] md:rounded-t-[16px] lg:rounded-t-[20px] bg-white relative flex flex-col">
       <ChatHeader
         currentView={currentView}
         setCurrentView={handleViewChange}
@@ -49,6 +51,7 @@ export const Chat = ({
         selectedPeople={selectedPeople}
         setSelectedPeople={setSelectedPeople}
         onProfileClick={handleProfileClick}
+        onBackToChatList={onBackToChatList}
       />
 
       {isProfileOpen && profileDoctor && (

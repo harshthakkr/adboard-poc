@@ -25,7 +25,7 @@ export const GradientButton = ({
       <button
         type={type}
         onClick={onClick}
-        className="flex justify-center items-center h-10 w-10 rounded-full cursor-pointer"
+        className="flex justify-center items-center h-9 w-9 md:h-10 md:w-10 rounded-full cursor-pointer"
         style={{
           backgroundImage: `url(${backgroundImage}), linear-gradient(to bottom, var(--color-primary-blue-dark), var(--color-primary-blue-mid))`,
           backgroundBlendMode: "normal",

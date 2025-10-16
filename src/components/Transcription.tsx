@@ -41,9 +41,9 @@ export const Transcription = ({
   ];
 
   return (
-    <div className="absolute w-[520px] z-100 h-full flex flex-col gap-6 bg-white top-0 right-0 px-5 py-4">
+    <div className="absolute w-full md:w-[420px] lg:w-[520px] z-100 h-full flex flex-col gap-4 md:gap-6 bg-white top-0 right-0 px-4 md:px-5 py-3 md:py-4 shadow-lg">
       <SecondaryHeader title="Transcription" set={setIsTranscriptionOn} />
-      <div className="space-y-2 overflow-y-auto flex-1">
+      <div className="space-y-2 overflow-y-auto flex-1 pr-2">
         {transcriptionMessages.map((msg, index) => (
           <TranscriptionMessage
             key={index}

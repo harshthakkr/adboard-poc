@@ -16,9 +16,15 @@ export const IconButton = ({
   className = "",
 }: IconButtonProps) => {
   const sizeClasses = {
-    small: "w-8 h-8",
-    medium: "w-10 h-10",
-    large: "w-11 h-11",
+    small: "w-7 h-7 md:w-8 md:h-8",
+    medium: "w-9 h-9 md:w-10 md:h-10",
+    large: "w-10 h-10 md:w-11 md:h-11",
+  };
+
+  const iconSizeClasses = {
+    small: "w-4 h-4",
+    medium: "w-5 h-5",
+    large: "w-6 h-6",
   };
 
   const variantClasses = {
@@ -33,7 +39,7 @@ export const IconButton = ({
       onClick={onClick}
       className={`
         flex justify-center items-center rounded-full cursor-pointer
-        active:scale-95 transition-all duration-200
+        active:scale-95 transition-all duration-200 flex-shrink-0
         ${sizeClasses[size]}
         ${variantClasses[variant]}
         ${className}
@@ -43,7 +49,7 @@ export const IconButton = ({
       <img
         src={icon}
         alt={alt}
-        className="hover:scale-110 transition-transform duration-200"
+        className={`hover:scale-110 transition-transform duration-200 ${iconSizeClasses[size]}`}
       />
     </button>
   );

@@ -18,18 +18,20 @@ export const Profile = ({
   const [currentTab, setCurrentTab] = useState("Patient Cases");
 
   return (
-    <div className="absolute right-3 top-3 w-[512px] h-[calc(100%-24px)] flex flex-col gap-4 bg-blue-100 px-5 py-4 rounded-2xl z-50">
+    <div className="absolute right-0 md:right-3 top-0 md:top-3 w-full md:w-[420px] lg:w-[512px] h-full md:h-[calc(100%-24px)] flex flex-col gap-3 md:gap-4 bg-blue-100 px-4 md:px-5 py-3 md:py-4 rounded-none md:rounded-2xl z-50 overflow-hidden">
       <SecondaryHeader title="Info" set={setIsProfileOpen} />
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3 md:gap-4">
         <Avatar src={ICONS.AVATAR} alt="Doctor Profile" size="large" />
-        <div className="flex flex-col">
-          <h1 className="font-semibold text-2xl">
+        <div className="flex flex-col min-w-0">
+          <h1 className="font-semibold text-xl md:text-2xl truncate">
             {doctor.name.length === 1 ? doctor.name[0] : doctor.name.join(", ")}
           </h1>
-          <span className="text-text-secondary">{doctor.occupation}</span>
+          <span className="text-text-secondary text-sm md:text-base truncate">
+            {doctor.occupation}
+          </span>
         </div>
       </div>
-      <div className="flex gap-3">
+      <div className="flex gap-2 md:gap-3 overflow-x-auto">
         <ProfileTab
           name="Patient Cases"
           setCurrentTab={setCurrentTab}

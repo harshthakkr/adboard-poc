@@ -14,9 +14,9 @@ export const Avatar = ({
   isGroup = false,
 }: AvatarProps) => {
   const sizeClasses = {
-    small: "w-6 h-6",
-    medium: "w-12 h-12",
-    large: "w-[50px] h-[50px]",
+    small: "w-5 h-5 md:w-6 md:h-6",
+    medium: "w-10 h-10 md:w-12 md:h-12",
+    large: "w-12 h-12 md:w-[50px] md:h-[50px]",
   };
 
   const clickableClasses = onClick
@@ -26,9 +26,9 @@ export const Avatar = ({
   if (isGroup) {
     return (
       <div
-        className={`${sizeClasses[size]} bg-bg-group rounded-full flex justify-center items-center transition-transform duration-200`}
+        className={`${sizeClasses[size]} bg-bg-group rounded-full flex justify-center items-center transition-transform duration-200 flex-shrink-0`}
       >
-        <img src="/Users.svg" alt={alt} />
+        <img src="/Users.svg" alt={alt} className="w-1/2 h-1/2" />
       </div>
     );
   }
@@ -38,7 +38,7 @@ export const Avatar = ({
       src={src}
       alt={alt}
       onClick={onClick}
-      className={`${sizeClasses[size]} rounded-full ${clickableClasses}`}
+      className={`${sizeClasses[size]} rounded-full flex-shrink-0 ${clickableClasses}`}
     />
   );
 };

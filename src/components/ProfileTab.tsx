@@ -9,7 +9,7 @@ export const ProfileTab = ({
 }) => {
   return (
     <span
-      className={`rounded-full px-[10px] py-2 ${
+      className={`rounded-full px-2 md:px-[10px] py-1.5 md:py-2 text-xs md:text-sm lg:text-base whitespace-nowrap ${
         isActive
           ? "bg-primary-blue-dark text-white scale-105 shadow-md"
           : "bg-white hover:bg-gray-100 hover:scale-105"

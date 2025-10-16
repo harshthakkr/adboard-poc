@@ -7,13 +7,13 @@ export const Navbar = ({
   setIsTranscriptionOn: (value: boolean) => void;
 }) => {
   return (
-    <nav className="flex items-center justify-center px-8 py-3">
+    <nav className="flex items-center justify-between md:justify-center px-4 md:px-6 lg:px-8 py-3 relative">
       <img
         src={ICONS.LOGO}
         alt="Application Logo"
-        className="absolute left-8"
+        className="h-7 md:absolute md:left-6 lg:left-8 md:h-10"
       />
-      <div className="flex items-center gap-2 p-2 border-2 border-white h-[52px] bg-white/80 rounded-full">
+      <div className="flex items-center gap-1 md:gap-2 p-1 md:p-1.5 lg:p-2 border-2 border-white h-[36px] md:h-[52px] bg-white/80 rounded-full">
         <ToggleItem
           icon={ICONS.DASHBOARD}
           alt="Dashboard icon"

@@ -35,7 +35,7 @@ export const ToggleItem = ({
     >
       <button
         onClick={handleClick}
-        className={`flex gap-2 px-5 py-1 text-text-secondary rounded-full cursor-pointer transition-all duration-200 ${
+        className={`flex gap-1.5 md:gap-2 px-3 md:px-5 py-1 text-text-secondary rounded-full cursor-pointer transition-all duration-200 text-sm md:text-base ${
           isActive
             ? "text-white scale-105 shadow-md"
             : "hover:bg-bg-hover hover:scale-105"
@@ -56,9 +56,9 @@ export const ToggleItem = ({
         <img
           src={icon}
           alt={alt}
-          className="transition-transform duration-200 group-hover:scale-110"
+          className="transition-transform duration-200 group-hover:scale-110 w-4 h-4 md:w-5 md:h-5"
         />
-        <span>{title}</span>
+        <span className="hidden sm:inline">{title}</span>
       </button>
     </div>
   );

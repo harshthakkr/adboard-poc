@@ -13,6 +13,7 @@ interface ChatHeaderProps {
   selectedPeople: string[];
   setSelectedPeople: (people: string[]) => void;
   onProfileClick: (doctor: Doctor) => void;
+  onBackToChatList?: () => void;
 }
 
 export const ChatHeader = ({
@@ -22,6 +23,7 @@ export const ChatHeader = ({
   selectedPeople,
   setSelectedPeople,
   onProfileClick,
+  onBackToChatList,
 }: ChatHeaderProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -70,9 +72,34 @@ export const ChatHeader = ({
   }, []);
 
   return (
-    <div className="flex p-4 items-center justify-between border-b border-px border-border-light">
+    <div className="flex p-3 md:p-4 items-center justify-between border-b border-px border-border-light">
+      {/* Back button - only visible on mobile */}
+      {onBackToChatList && (
+        <button
+          onClick={onBackToChatList}
+          className="md:hidden mr-2 flex-shrink-0"
+          aria-label="Back to chat list"
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      )}
+
       {currentView !== CurrentView.NEW_CHAT && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 min-w-0 flex-1">
           <Avatar
             src={ICONS.AVATAR}
             alt={
@@ -88,9 +115,9 @@ export const ChatHeader = ({
             }
             isGroup={activeChat?.name.length !== 1}
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0 flex-1">
             <span
-              className={`font-medium text-text-primary ${
+              className={`font-medium text-text-primary text-sm md:text-base truncate ${
                 activeChat?.name.length === 1
                   ? "cursor-pointer hover:underline"
                   : ""
@@ -105,19 +132,21 @@ export const ChatHeader = ({
                 ? activeChat.name[0]
                 : activeChat?.name.join(", ")}
             </span>
-            <span className="text-text-secondary">
+            <span className="text-text-secondary text-xs md:text-sm truncate">
               {activeChat?.occupation}
             </span>
           </div>
         </div>
       )}
       {currentView === CurrentView.NEW_CHAT && (
-        <div className="flex-1 space-y-2">
-          <h2 className="text-lg font-semibold">New Message</h2>
+        <div className="flex-1 space-y-2 min-w-0">
+          <h2 className="text-base md:text-lg font-semibold">New Message</h2>
           <div className="relative" ref={dropdownRef}>
             <div className="flex items-end gap-2">
-              <span className="text-text-secondary">To:</span>
-              <div className="flex flex-wrap gap-1 flex-1">
+              <span className="text-text-secondary text-sm md:text-base">
+                To:
+              </span>
+              <div className="flex flex-wrap gap-1 flex-1 min-w-0">
                 {selectedPeople.map((person) => (
                   <div
                     key={person}
@@ -159,7 +188,7 @@ export const ChatHeader = ({
               </div>
             </div>
             {showDropdown && availablePeople.length > 0 && (
-              <div className="absolute top-full left-0 w-[346px] mt-3 px-3 py-2 bg-white border border-border-light rounded-lg shadow-lg max-h-52 overflow-y-auto z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute top-full left-0 w-full md:w-[346px] mt-3 px-3 py-2 bg-white border border-border-light rounded-lg shadow-lg max-h-52 overflow-y-auto z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                 {availablePeople.map((chat) => (
                   <div
                     key={chat.id}
@@ -186,13 +215,25 @@ export const ChatHeader = ({
           </div>
         </div>
       )}
-      <div className="flex gap-3">
-        <IconButton icon={ICONS.PHONE} alt="Voice call" variant="default" />
+      <div className="flex gap-2 md:gap-3 flex-shrink-0">
+        <IconButton
+          icon={ICONS.PHONE}
+          alt="Voice call"
+          variant="default"
+          size="medium"
+        />
         <IconButton
           icon={ICONS.VIDEO_CAMERA}
           alt="Video call"
           variant="default"
-          onClick={() => setCurrentView(CurrentView.VIDEO_CALL)}
+          size="medium"
+          onClick={() =>
+            setCurrentView(
+              activeChat?.name.length && activeChat.name.length > 1
+                ? CurrentView.GROUP_VIDEO_CALL
+                : CurrentView.VIDEO_CALL
+            )
+          }
         />
       </div>
     </div>
