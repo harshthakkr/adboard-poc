@@ -12,7 +12,7 @@ export const SecondaryHeader = ({
         src="/X-3.svg"
         alt="Close Icon"
         onClick={() => set(false)}
-        className="cursor-pointer"
+        className="cursor-pointer hover:scale-110 hover:rotate-90 active:scale-95 transition-all duration-200"
       />
     </div>
   );

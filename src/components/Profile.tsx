@@ -33,9 +33,21 @@ export const Profile = ({
         </div>
       </div>
       <div className="flex gap-3">
-        <ProfileTab name="Patient Cases" setCurrentTab={setCurrentTab} />
-        <ProfileTab name="Publications" setCurrentTab={setCurrentTab} />
-        <ProfileTab name="Social Media" setCurrentTab={setCurrentTab} />
+        <ProfileTab
+          name="Patient Cases"
+          setCurrentTab={setCurrentTab}
+          isActive={currentTab === "Patient Cases"}
+        />
+        <ProfileTab
+          name="Publications"
+          setCurrentTab={setCurrentTab}
+          isActive={currentTab === "Publications"}
+        />
+        <ProfileTab
+          name="Social Media"
+          setCurrentTab={setCurrentTab}
+          isActive={currentTab === "Social Media"}
+        />
       </div>
       <div className="flex-1 overflow-y-auto">
         {currentTab === "Patient Cases" ? (

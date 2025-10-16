@@ -26,9 +26,11 @@ export const ToggleItem = ({
     >
       <div
         onClick={() => setIsTranscriptionOn && setIsTranscriptionOn(true)}
-        className={`flex gap-2 px-5 py-3 text-[#93A1B8] rounded-full ${
-          isActive ? "text-white" : ""
-        }`}
+        className={`flex gap-2 px-5 py-1 text-[#93A1B8] rounded-full cursor-pointer transition-all duration-200 ${
+          isActive
+            ? "text-white scale-105 shadow-md"
+            : "hover:bg-[#EBF0FF] hover:scale-105"
+        } active:scale-95`}
         style={
           isActive
             ? {
@@ -41,7 +43,11 @@ export const ToggleItem = ({
             : undefined
         }
       >
-        <img src={icon} alt={alt} />
+        <img
+          src={icon}
+          alt={alt}
+          className="transition-transform duration-200 group-hover:scale-110"
+        />
         <span>{title}</span>
       </div>
     </div>

@@ -1,7 +1,5 @@
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 import avatar from "/Avatar.png";
-import phoneIcon from "/Phone.svg";
-import videoCameraIcon from "/VideoCamera.svg";
 import allDoctors from "../data/doctor.json";
 import { useState, useRef, useEffect } from "react";
 import type { Doctor } from "../types/DoctorType";
@@ -76,7 +74,7 @@ export const ChatHeader = ({
           {activeChat?.name.length === 1 ? (
             <img
               src={avatar}
-              alt=""
+              alt={`${activeChat.name[0]}'s avatar`}
               height={48}
               width={48}
               className="rounded-full cursor-pointer"
@@ -84,7 +82,7 @@ export const ChatHeader = ({
             />
           ) : (
             <div className="w-12 h-12 bg-[#F7F9FF] rounded-full flex justify-center items-center">
-              <img src="/Users.svg" alt="Users" />
+              <img src="/Users.svg" alt="Group chat" />
             </div>
           )}
           <div className="flex flex-col">
@@ -118,15 +116,24 @@ export const ChatHeader = ({
                 {selectedPeople.map((person) => (
                   <div
                     key={person}
-                    className="flex items-center gap-1 bg-[#EBF0FF] p-1 pr-2 rounded-full"
+                    className="flex items-center gap-1 bg-[#EBF0FF] p-1 pr-2 rounded-full transition-all duration-200 hover:bg-[#D6E4FF] hover:scale-105"
                   >
-                    <img src={avatar} alt="" className="w-5 h-5 rounded-full" />
+                    <img
+                      src={avatar}
+                      alt={`${person}'s avatar`}
+                      className="w-5 h-5 rounded-full"
+                    />
                     <span className="text-sm">{person}</span>
                     <button
                       onClick={() => removePerson(person)}
-                      className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                      className="text-gray-500 hover:text-gray-700 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200"
                     >
-                      <img src="/X-2.svg" alt="" width="12px" height="12px" />
+                      <img
+                        src="/X-2.svg"
+                        alt="Remove"
+                        width="12px"
+                        height="12px"
+                      />
                     </button>
                   </div>
                 ))}
@@ -146,14 +153,18 @@ export const ChatHeader = ({
               </div>
             </div>
             {showDropdown && availablePeople.length > 0 && (
-              <div className="absolute top-full left-0 w-[346px] mt-3 px-3 py-2 bg-white border border-[#EEEEEE] rounded-lg shadow-lg max-h-52 overflow-y-auto z-50">
+              <div className="absolute top-full left-0 w-[346px] mt-3 px-3 py-2 bg-white border border-[#EEEEEE] rounded-lg shadow-lg max-h-52 overflow-y-auto z-50 animate-in fade-in slide-in-from-top-2 duration-200">
                 {availablePeople.map((chat) => (
                   <div
                     key={chat.id}
                     onClick={() => addPerson(chat.name[0])}
-                    className="flex items-center gap-2 px-2 py-3 hover:bg-[#EBF0FF] hover:rounded-xl border-b border-px border-[#EEEEEE] cursor-pointer"
+                    className="flex items-center gap-2 px-2 py-3 hover:bg-[#EBF0FF] hover:rounded-xl border-b border-px border-[#EEEEEE] cursor-pointer transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                   >
-                    <img src={avatar} alt="" className="w-8 h-8 rounded-full" />
+                    <img
+                      src={avatar}
+                      alt={`${chat.name[0]}'s avatar`}
+                      className="w-8 h-8 rounded-full"
+                    />
                     <div className="flex-1 min-w-0">
                       <div className="font-medium text-sm text-[#1C274C]">
                         {chat.name[0]}
@@ -170,14 +181,22 @@ export const ChatHeader = ({
         </div>
       )}
       <div className="flex gap-3">
-        <div className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full">
-          <img src={phoneIcon} alt="" />
+        <div className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full cursor-pointer hover:bg-[#EBF0FF] hover:border-[#4B7BFF] active:scale-95 transition-all duration-200">
+          <img
+            src="/Phone.svg"
+            alt="Voice call"
+            className="transition-transform duration-200 hover:scale-110"
+          />
         </div>
         <div
           onClick={() => setCurrentView(CurrentView.VIDEO_CALL)}
-          className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full cursor-pointer"
+          className="flex items-center justify-center w-10 h-10 border border-px border-[#EEEEEE] rounded-full cursor-pointer hover:bg-[#EBF0FF] hover:border-[#4B7BFF] active:scale-95 transition-all duration-200"
         >
-          <img src={videoCameraIcon} alt="" />
+          <img
+            src="/VideoCamera.svg"
+            alt="Video call"
+            className="transition-transform duration-200 hover:scale-110"
+          />
         </div>
       </div>
     </div>

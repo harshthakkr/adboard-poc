@@ -21,7 +21,7 @@ export const VideoCallScreen = ({
         />
         {isSpeaking && (
           <div className="absolute flex gap-1 justify-center items-center left-[13.5px] bottom-[13.5px] bg-white text-[#16191D] text-sm border-px border-[#EEEEEE] p-2 rounded-full">
-            <img src="/Waveform.svg" alt="" />
+            <img src="/Waveform.svg" alt="Speaking indicator" />
             <span>Speaking</span>
           </div>
         )}

@@ -11,7 +11,7 @@ export const TranscriptionMessage = ({
     <div className="flex gap-4 items-start">
       <img
         src={image}
-        alt="Avatar"
+        alt={`${name}'s avatar`}
         height={24}
         width={24}
         className="rounded-full"

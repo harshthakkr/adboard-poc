@@ -14,21 +14,27 @@ export const ChatItem = ({
   return (
     <div
       onClick={onClick}
-      className={`flex gap-2 items-center p-2 cursor-pointer ${
-        isActive && "bg-[#EBF0FF] rounded-[12px]"
-      } border-b border-[#EEEEEE] hover:bg-gray-50 hover:rounded-[12px]`}
+      className={`flex gap-2 items-center p-2 cursor-pointer transition-all duration-200 ${
+        isActive
+          ? "bg-[#EBF0FF] rounded-[12px] scale-[1.02]"
+          : "hover:bg-gray-50 hover:rounded-[12px] hover:scale-[1.01]"
+      } border-b border-[#EEEEEE] active:scale-[0.99]`}
     >
       {isGroup ? (
-        <div className="w-12 h-12 bg-[#F7F9FF] rounded-full flex justify-center items-center">
-          <img src="/Users.svg" alt="Users" />
+        <div className="w-12 h-12 bg-[#F7F9FF] rounded-full flex justify-center items-center transition-transform duration-200">
+          <img
+            src="/Users.svg"
+            alt="Group chat"
+            className="transition-transform duration-200"
+          />
         </div>
       ) : (
         <img
           src="/Avatar.png"
-          alt=""
+          alt={`${name}'s avatar`}
           height={48}
           width={48}
-          className="rounded-full"
+          className="rounded-full transition-transform duration-200 hover:scale-105"
         />
       )}
 

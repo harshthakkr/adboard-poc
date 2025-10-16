@@ -20,9 +20,9 @@ export const ChatsList = ({
         <h2 className="font-medium text-lg">Chats</h2>
         <img
           src={notePencilLogo}
-          alt=""
+          alt="New chat"
           onClick={() => setCurrentView(CurrentView.NEW_CHAT)}
-          className="cursor-pointer"
+          className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200"
         />
       </div>
       <div className="flex flex-col gap-2 overflow-y-auto flex-1">

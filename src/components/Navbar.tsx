@@ -1,8 +1,3 @@
-import logo from "/logo.svg";
-import squaresFourLogo from "/SquaresFour.svg";
-import magicWandLogo from "/MagicWand.svg";
-import notebookLogo from "/Notebook.svg";
-import chatCircleLogo from "/ChatCircle.svg";
 import { ToggleItem } from "./ToggleItem";
 
 export const Navbar = ({
@@ -12,17 +7,30 @@ export const Navbar = ({
 }) => {
   return (
     <nav className="flex items-center justify-center px-8 py-3">
-      <img src={logo} alt="logo" className="absolute left-8" />
-      <div className="flex gap-2 p-2 border-[2px] border-white bg-white/80 rounded-full">
-        <ToggleItem icon={squaresFourLogo} alt="" title="Dashboard" />
-        <ToggleItem icon={magicWandLogo} alt="" title="Insights" />
+      <img src="/logo.svg" alt="Application Logo" className="absolute left-8" />
+      <div className="flex items-center gap-2 p-2 border-2 border-white h-[52px] bg-white/80 rounded-full">
         <ToggleItem
-          icon={notebookLogo}
-          alt=""
+          icon="/SquaresFour.svg"
+          alt="Dashboard icon"
+          title="Dashboard"
+        />
+        <ToggleItem
+          icon="/MagicWand.svg"
+          alt="Insights icon"
+          title="Insights"
+        />
+        <ToggleItem
+          icon="/Notebook.svg"
+          alt="Transcript icon"
           title="Transcript"
           setIsTranscriptionOn={setIsTranscriptionOn}
         />
-        <ToggleItem icon={chatCircleLogo} alt="" title="Chat" isActive />
+        <ToggleItem
+          icon="/ChatCircle.svg"
+          alt="Chat icon"
+          title="Chat"
+          isActive
+        />
       </div>
     </nav>
   );

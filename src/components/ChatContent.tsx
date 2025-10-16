@@ -1,15 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import copyIcon from "/Copy.svg";
-import speakerHighIcon from "/SpeakerHigh.svg";
-import thumbsUpIcon from "/ThumbsUp.svg";
-import thumbsDownIcon from "/ThumbsDown.svg";
-import magicStickIcon from "/MagicStick4.svg";
-import arrowsClockwiseIcon from "/ArrowsClockwise.svg";
-import iconButton from "/IconButton.svg";
-import arrowUpIcon from "/ArrowUp.svg";
 import background from "/ButtonImageBackground.png";
-import xIcon from "/x.svg";
 import { CurrentView, type CurrentViewType } from "../types/CurrentView";
 
 interface ChatContentProps {
@@ -54,7 +45,6 @@ export const ChatContent = ({
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (message.trim()) {
-      // Handle NEW_CHAT view: create group if 2+ people selected
       if (currentView === CurrentView.NEW_CHAT && selectedPeople.length >= 2) {
         const newGroupId = onCreateGroup(selectedPeople, message);
         setSentMessages((prev) => ({
@@ -64,18 +54,14 @@ export const ChatContent = ({
         setMessage("");
         setFiles([]);
         setSelectedPeople([]);
-      }
-      // Handle regular chat or single person new chat
-      else if (activeChat) {
+      } else if (activeChat) {
         setSentMessages((prev) => ({
           ...prev,
           [activeChat.id]: [...(prev[activeChat.id] || []), message],
         }));
         setMessage("");
         setFiles([]);
-      }
-      // Handle single person in NEW_CHAT (create individual chat)
-      else if (
+      } else if (
         currentView === CurrentView.NEW_CHAT &&
         selectedPeople.length === 1
       ) {
@@ -101,11 +87,10 @@ export const ChatContent = ({
     ? sentMessages[activeChat.id] || []
     : [];
 
-  // Only show hardcoded messages for original chats (id <= 9), not for new groups
   const isOriginalChat = activeChat && activeChat.id <= 9;
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col relative">
       <div className="flex-1 overflow-y-auto px-8" ref={scrollRef}>
         {currentView === CurrentView.CHAT ? (
           <div className="flex flex-col gap-[10px] mt-[37px] pb-4">
@@ -127,12 +112,36 @@ export const ChatContent = ({
                     information.
                   </p>
                   <div className="flex gap-[10px]">
-                    <img src={copyIcon} alt="" className="p-1" />
-                    <img src={speakerHighIcon} alt="" />
-                    <img src={thumbsUpIcon} alt="" />
-                    <img src={thumbsDownIcon} alt="" />
-                    <img src={magicStickIcon} alt="" />
-                    <img src={arrowsClockwiseIcon} alt="" />
+                    <img
+                      src="/Copy.svg"
+                      alt="Copy message"
+                      className="p-1 cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded"
+                    />
+                    <img
+                      src="/SpeakerHigh.svg"
+                      alt="Read aloud"
+                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
+                    />
+                    <img
+                      src="/ThumbsUp.svg"
+                      alt="Thumbs up"
+                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
+                    />
+                    <img
+                      src="/ThumbsDown.svg"
+                      alt="Thumbs down"
+                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
+                    />
+                    <img
+                      src="/MagicStick4.svg"
+                      alt="AI enhance"
+                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
+                    />
+                    <img
+                      src="/ArrowsClockwise.svg"
+                      alt="Regenerate"
+                      className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200 hover:bg-gray-100 rounded p-1"
+                    />
                   </div>
                 </div>
                 <div className="flex justify-end">
@@ -183,19 +192,21 @@ export const ChatContent = ({
           </div>
         ) : null}
       </div>
-      <div className="flex-shrink-0 mx-8 mb-4 flex flex-col gap-4 p-4 rounded-[16px] border border-px border-[#EEEEEE] bg-white">
+
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none"></div>
+      <div className="flex-shrink-0 mx-8 mb-4 flex flex-col gap-4 p-4 rounded-[16px] border border-px border-[#EEEEEE] bg-white relative z-10">
         {files.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {files.map((file) => (
               <div
                 key={file.name}
-                className="relative flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg"
+                className="relative flex items-center gap-2 px-3 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-200"
               >
                 <button
                   onClick={() => removeFile(file)}
-                  className="absolute -top-1 -right-1 bg-[#EBF0FF] rounded-full flex items-center justify-center cursor-pointer"
+                  className="absolute -top-1 -right-1 bg-[#EBF0FF] rounded-full flex items-center justify-center cursor-pointer hover:bg-[#D6E4FF] hover:scale-110 active:scale-95 transition-all duration-200"
                 >
-                  <img src={xIcon} alt="remove" className="w-4 h-4" />
+                  <img src="/x.svg" alt="Remove file" className="w-4 h-4" />
                 </button>
                 {file.type.startsWith("image/") ? (
                   <img
@@ -227,15 +238,15 @@ export const ChatContent = ({
             <div {...getRootProps()}>
               <input {...getInputProps()} />
               <img
-                src={iconButton}
-                alt=""
+                src="/IconButton.svg"
+                alt="Attach files"
                 height={40}
                 width={40}
-                className="cursor-pointer"
+                className="cursor-pointer hover:scale-110 active:scale-95 transition-transform duration-200"
               />
             </div>
             <div
-              className="p-[1px] rounded-full"
+              className="p-[1px] rounded-full hover:scale-105 active:scale-95 transition-transform duration-200"
               style={{
                 background: "linear-gradient(to bottom, #013BDB, #77C0FF)",
               }}
@@ -251,7 +262,11 @@ export const ChatContent = ({
                   backgroundRepeat: "no-repeat",
                 }}
               >
-                <img src={arrowUpIcon} alt="" className="relative z-10" />
+                <img
+                  src="/ArrowUp.svg"
+                  alt="Send message"
+                  className="relative z-10"
+                />
               </button>
             </div>
           </div>

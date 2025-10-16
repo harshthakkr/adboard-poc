@@ -39,7 +39,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-[#F9FAFF]">
       <Navbar setIsTranscriptionOn={setIsTranscriptionOn} />
       <div className="flex gap-3 px-8 py-4">
         <ChatsList
